@@ -34,7 +34,7 @@ export default function LabSettingsView() {
   return (
     <form onSubmit={handleSave} className="space-y-5">
       {/* ── TOP BANNER ──────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="p-2 bg-purple-100 text-[#7552B8] rounded-xl">
             <Settings className="w-5 h-5" />
@@ -66,7 +66,7 @@ export default function LabSettingsView() {
       {/* ── SETTINGS PANELS ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Panel 1: Accreditation & Laboratory Profile */}
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-2xs space-y-4">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-5 shadow-2xs space-y-4">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
             <Building2 className="w-4 h-4 text-[#7552B8]" />
             <span>Accreditation & Laboratory Identity</span>
@@ -116,7 +116,7 @@ export default function LabSettingsView() {
         </div>
 
         {/* Panel 2: Turnaround Time (TAT) Benchmarks */}
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-2xs space-y-4">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-5 shadow-2xs space-y-4">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
             <Clock className="w-4 h-4 text-[#0D9488]" />
             <span>Turnaround Time (TAT) Benchmark SLAs (Minutes)</span>
@@ -193,7 +193,7 @@ export default function LabSettingsView() {
         </div>
 
         {/* Panel 3: Specimen Vacuum Tube Reference Guide */}
-        <div className="md:col-span-2 bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-2xs space-y-4">
+        <div className="md:col-span-2 bg-white border border-[#DCE4EC] rounded-xl p-5 shadow-2xs space-y-4">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
             <Droplet className="w-4 h-4 text-rose-600" />
             <span>Phlebotomy Vacuum Tube Container Standards</span>

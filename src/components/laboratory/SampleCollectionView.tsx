@@ -116,7 +116,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
 
       {/* ── TOP STATS & CONTROLS ────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Pending Draws</span>
             <Clock className="w-4 h-4 text-amber-500" />
@@ -125,7 +125,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
           <div className="text-[10px] text-amber-600 font-semibold mt-0.5">Awaiting phlebotomy draw</div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Drawn Today</span>
             <CheckCircle2 className="w-4 h-4 text-teal-600" />
@@ -134,10 +134,10 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
           <div className="text-[10px] text-teal-600 font-semibold mt-0.5">Specimens accession-ready</div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="text-[11px] font-bold text-slate-500 uppercase mb-1">Active Phlebotomist</div>
           <div className="flex items-center gap-2">
-            <User className="w-4 h-4 text-[#7552B8]" />
+            <User className="w-4 h-4 text-[#167D8D]" />
             <input
               type="text"
               value={collectorName}
@@ -147,7 +147,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="text-[11px] font-bold text-slate-500 uppercase mb-1">Collection Station</div>
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-[#0D9488]" />
@@ -166,10 +166,10 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
       </div>
 
       {/* ── TOOLBAR & QUEUE ─────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
-        <div className="p-4 border-b border-[#E2E8F0] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
+        <div className="p-4 border-b border-[#DCE4EC] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Syringe className="w-5 h-5 text-[#7552B8]" />
+            <Syringe className="w-5 h-5 text-[#167D8D]" />
             <div>
               <h3 className="text-sm font-bold text-slate-900">Phlebotomy & Sample Collection Queue</h3>
               <p className="text-[11px] text-slate-500">Collect specimens, print tube barcodes, and record drawing times</p>
@@ -184,14 +184,14 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
                 placeholder="Search patient, UMR, barcode..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl focus:outline-none w-56"
+                className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl focus:outline-none w-56"
               />
             </div>
 
             <select
               value={selectedTubeFilter}
               onChange={(e) => setSelectedTubeFilter(e.target.value)}
-              className="px-2.5 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl text-slate-700 focus:outline-none"
+              className="px-2.5 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl text-slate-700 focus:outline-none"
             >
               <option value="All">All Tube Types</option>
               <option value="Lavender">Lavender (EDTA)</option>
@@ -204,7 +204,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
 
             <button
               onClick={loadData}
-              className="p-1.5 bg-white border border-[#E2E8F0] hover:bg-slate-100 rounded-xl text-slate-600 transition cursor-pointer"
+              className="p-1.5 bg-white border border-[#DCE4EC] hover:bg-slate-100 rounded-xl text-slate-600 transition cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
             </button>
@@ -212,13 +212,13 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
         </div>
 
         {/* ── SUB-MODULE QUEUE TABS ────────────────────────────────────────── */}
-        <div className="flex border-b border-[#E2E8F0] bg-slate-50/70 p-2 gap-2 text-xs overflow-x-auto">
+        <div className="flex border-b border-[#DCE4EC] bg-slate-50/70 p-2 gap-2 text-xs overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveSubTab("pending")}
             className={`px-3.5 py-1.5 font-bold rounded-xl transition cursor-pointer flex items-center gap-2 whitespace-nowrap ${
               activeSubTab === "pending"
-                ? "bg-[#7552B8] text-white shadow-2xs"
+                ? "bg-[#167D8D] text-white shadow-2xs"
                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
             }`}
           >
@@ -238,7 +238,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
             onClick={() => setActiveSubTab("collected")}
             className={`px-3.5 py-1.5 font-bold rounded-xl transition cursor-pointer flex items-center gap-2 whitespace-nowrap ${
               activeSubTab === "collected"
-                ? "bg-[#7552B8] text-white shadow-2xs"
+                ? "bg-[#167D8D] text-white shadow-2xs"
                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
             }`}
           >
@@ -258,7 +258,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
             onClick={() => setActiveSubTab("all")}
             className={`px-3.5 py-1.5 font-bold rounded-xl transition cursor-pointer flex items-center gap-2 whitespace-nowrap ${
               activeSubTab === "all"
-                ? "bg-[#7552B8] text-white shadow-2xs"
+                ? "bg-[#167D8D] text-white shadow-2xs"
                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
             }`}
           >
@@ -277,7 +277,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-[#E2E8F0] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-[#DCE4EC] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                 <th className="py-3 px-4">Specimen ID & Barcode</th>
                 <th className="py-3 px-4">Patient Details</th>
                 <th className="py-3 px-4">Container Tube Type</th>
@@ -317,7 +317,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
                       <td className="py-3 px-4">
                         <div className="font-mono font-bold text-slate-900">{spec.id}</div>
                         <div className="flex items-center gap-1 text-[10px] font-mono text-slate-500 mt-0.5">
-                          <Barcode className="w-3 h-3 text-[#7552B8]" />
+                          <Barcode className="w-3 h-3 text-[#167D8D]" />
                           <span>{spec.barcode}</span>
                         </div>
                       </td>
@@ -375,7 +375,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
                           {!isCollected ? (
                             <button
                               onClick={() => handleCollect(spec)}
-                              className="px-3 py-1 bg-[#7552B8] hover:bg-[#6240a3] text-white font-bold rounded-lg transition shadow-2xs cursor-pointer flex items-center gap-1"
+                              className="px-3 py-1 bg-[#167D8D] hover:bg-[#136674] text-white font-bold rounded-lg transition shadow-2xs cursor-pointer flex items-center gap-1"
                             >
                               <Syringe className="w-3 h-3" />
                               <span>Draw</span>
@@ -415,7 +415,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
           <div className="bg-white rounded-2xl max-w-sm w-full border border-slate-200 shadow-2xl overflow-hidden p-5 space-y-4">
             <div className="flex justify-between items-center border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <Barcode className="w-5 h-5 text-[#7552B8]" />
+                <Barcode className="w-5 h-5 text-[#167D8D]" />
                 <h4 className="text-sm font-bold text-slate-900">Specimen Barcode Label</h4>
               </div>
               <button
@@ -471,7 +471,7 @@ export default function SampleCollectionView({ onOpenWorkbench }: SampleCollecti
                   setActiveBarcodeSpecimen(null)
                   showToast("Barcode label sent to thermal zebra printer!")
                 }}
-                className="px-4 py-1.5 bg-[#7552B8] hover:bg-[#6240a3] text-white text-xs font-bold rounded-lg transition shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-1.5 bg-[#167D8D] hover:bg-[#136674] text-white text-xs font-bold rounded-lg transition shadow-2xs flex items-center gap-1.5 cursor-pointer"
               >
                 <Printer className="w-3.5 h-3.5" />
                 <span>Print Sticker</span>

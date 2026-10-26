@@ -186,7 +186,7 @@ export default function SampleReceptionView() {
 
       {/* ── METRIC STATS ────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Awaiting Reception</span>
             <Clock className="w-4 h-4 text-blue-600" />
@@ -195,7 +195,7 @@ export default function SampleReceptionView() {
           <div className="text-[10px] text-blue-600 font-semibold mt-0.5">Arrived from phlebotomy queue</div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Accepted Today</span>
             <CheckCircle2 className="w-4 h-4 text-teal-600" />
@@ -204,7 +204,7 @@ export default function SampleReceptionView() {
           <div className="text-[10px] text-teal-600 font-semibold mt-0.5">Under active bench analysis</div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Rejected / QNS</span>
             <XCircle className="w-4 h-4 text-rose-600" />
@@ -215,7 +215,7 @@ export default function SampleReceptionView() {
       </div>
 
       {/* ── SUB-TABS: CLEAN CATEGORIZATION & SEPARATION ─────────────────── */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[#E2E8F0] pb-2">
+      <div className="flex flex-wrap items-center gap-2 border-b border-[#DCE4EC] pb-2">
         <button
           onClick={() => setActiveSubTab("awaiting")}
           className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
@@ -294,8 +294,8 @@ export default function SampleReceptionView() {
       </div>
 
       {/* ── ACCESSIONING QUEUE TABLE ────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
-        <div className="p-4 border-b border-[#E2E8F0] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
+        <div className="p-4 border-b border-[#DCE4EC] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Inbox className="w-5 h-5 text-[#7552B8]" />
             <div>
@@ -317,14 +317,14 @@ export default function SampleReceptionView() {
                 placeholder="Search patient, barcode..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl focus:outline-none w-52"
+                className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl focus:outline-none w-52"
               />
             </div>
 
             <select
               value={selectedDeptFilter}
               onChange={(e) => setSelectedDeptFilter(e.target.value)}
-              className="px-2.5 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl text-slate-700 focus:outline-none"
+              className="px-2.5 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl text-slate-700 focus:outline-none"
             >
               <option value="All">All Departments</option>
               <option value="Hematology">Hematology</option>
@@ -335,7 +335,7 @@ export default function SampleReceptionView() {
 
             <button
               onClick={loadData}
-              className="p-1.5 bg-white border border-[#E2E8F0] hover:bg-slate-100 rounded-xl text-slate-600 transition cursor-pointer"
+              className="p-1.5 bg-white border border-[#DCE4EC] hover:bg-slate-100 rounded-xl text-slate-600 transition cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
             </button>
@@ -345,7 +345,7 @@ export default function SampleReceptionView() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-[#E2E8F0] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-[#DCE4EC] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                 <th className="py-3 px-4">Barcode & ID</th>
                 <th className="py-3 px-4">Patient Information</th>
                 <th className="py-3 px-4">Specimen Type & Tube</th>

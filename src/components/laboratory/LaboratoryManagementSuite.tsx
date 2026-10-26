@@ -20,6 +20,13 @@ import {
   BookOpen,
   Info,
   X,
+  ChevronLeft,
+  ChevronRight,
+  ShieldAlert,
+  Clock,
+  Syringe,
+  Filter,
+  Check,
 } from "lucide-react"
 import LabDashboardView from "./LabDashboardView"
 import LabOrdersAndCollectionView from "./LabOrdersAndCollectionView"
@@ -28,6 +35,7 @@ import LabReportsView from "./LabReportsView"
 import LaboratoryInventory from "./LaboratoryInventory"
 import QualityControlView from "./QualityControlView"
 import AdminConfigurationView from "./AdminConfigurationView"
+import CriticalAlertsView from "./CriticalAlertsView"
 import { LabOrder, LabOrderDatabase, LabOrderTest } from "../../services/labOrdersDb"
 import { LabLisService, SpecimenRecord, CriticalAlertRecord } from "../../services/labLisService"
 
@@ -45,7 +53,6 @@ export type LisSubModule =
   | "lab_inventory"
   | "lab_quality_analytics"
   | "lab_admin_config"
-  // Legacy / granular keys for seamless routing:
   | "lab_orders"
   | "lab_sample_collection"
   | "lab_worklists"
@@ -60,42 +67,49 @@ export type LisSubModule =
 
 const MODULE_HEADER_INFO: Record<
   string,
-  { title: string; subtitle: string; badge?: string }
+  { title: string; subtitle: string; badge?: string; breadcrumb: string }
 > = {
   lab_dashboard: {
-    title: "Laboratory Dashboard",
+    title: "Laboratory Command Center",
     subtitle: "Real-time diagnostic workload, turnaround times, and pending specimen queues",
     badge: "Operational Overview",
+    breadcrumb: "Command Dashboard",
   },
   lab_orders_collection: {
     title: "Lab Orders & Sample Collection",
-    subtitle: "Doctor order intake, billing verification, tube selection, and phlebotomy collection queue",
+    subtitle: "Doctor order intake, billing verification, tube selection, and barcode phlebotomy queue",
     badge: "Orders & Phlebotomy",
+    breadcrumb: "Orders & Phlebotomy",
   },
   lab_workbench: {
-    title: "Laboratory Workbench",
-    subtitle: "Department analytical queues, structured result entry with panic limits, and pathologist review",
+    title: "Laboratory Analytical Workbench",
+    subtitle: "Department analytical queues, structured result entry with panic limits, and clinical sign-off",
     badge: "Testing & Review",
+    breadcrumb: "Lab Workbench",
   },
   lab_reports: {
     title: "Laboratory Diagnostic Reports",
     subtitle: "Authorized printable reports, newly approved queue, release history, and patient EMR sync",
     badge: "Diagnostic Reports",
+    breadcrumb: "Diagnostic Reports",
   },
   lab_inventory: {
     title: "Lab Inventory & Consumables",
     subtitle: "Reagents, test kits, vacuum collection tubes, and consumable stock management",
     badge: "Reagents & Stock",
+    breadcrumb: "Inventory & Stock",
   },
   lab_quality_analytics: {
     title: "Quality Control & Analytics",
     subtitle: "Levey-Jennings visual QC charts, Westgard multi-rules, operational analytics, and TAT SLA monitoring",
     badge: "QC & Analytics",
+    breadcrumb: "Quality & Analytics",
   },
   lab_admin_config: {
     title: "Laboratory Admin Configuration",
     subtitle: "Master test catalogue, tariffs, biological reference intervals, and laboratory governance",
     badge: "Test Master & Setup",
+    breadcrumb: "Admin Configuration",
   },
 }
 
@@ -104,7 +118,6 @@ export default function LaboratoryManagementSuite({
   activeSubPage = "lab_dashboard",
   onNavigate,
 }: LaboratoryManagementSuiteProps) {
-  // Normalize module keys into consolidated LIS architecture
   const normalizeKey = (key: string): LisSubModule => {
     if (key === "laboratory" || key === "lab" || key === "lab_dashboard") return "lab_dashboard"
     if (key === "lab_orders" || key === "lab_sample_collection" || key === "lab_orders_collection") {
@@ -133,7 +146,6 @@ export default function LaboratoryManagementSuite({
     if (key === "lab_admin_config" || key === "lab_test_master" || key === "lab_catalog" || key === "lab_settings") {
       return "lab_admin_config"
     }
-
     return "lab_dashboard"
   }
 
@@ -141,8 +153,10 @@ export default function LaboratoryManagementSuite({
   const [activeOrderForBench, setActiveOrderForBench] = useState<LabOrder | null>(null)
   const [activeTestForBench, setActiveTestForBench] = useState<LabOrderTest | null>(null)
   const [showGuide, setShowGuide] = useState(false)
+  const [showCriticalModal, setShowCriticalModal] = useState(false)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
 
-  // Live data subscriptions for badges
+  // Live data subscriptions
   const [orders, setOrders] = useState<LabOrder[]>(() => LabOrderDatabase.getOrders())
   const [specimens, setSpecimens] = useState<SpecimenRecord[]>(() => LabLisService.getSpecimens())
   const [criticalAlerts, setCriticalAlerts] = useState<CriticalAlertRecord[]>(() => LabLisService.getCriticalAlerts())
@@ -164,36 +178,30 @@ export default function LaboratoryManagementSuite({
   }, [])
 
   useEffect(() => {
-    if (activeSubPage) {
-      setCurrentTab(normalizeKey(activeSubPage))
-    }
+    setCurrentTab(normalizeKey(activeSubPage))
   }, [activeSubPage])
 
-  const counts = useMemo(() => {
-    const pendingDraws = specimens.filter(
-      (s) => s.status === "Collection Pending" || s.status === "Recollection Requested"
-    ).length
-    const workbenchPending = orders.filter(
-      (o) => o.status === "Sample Collected" || o.status === "In Progress" || o.status === "Billed"
-    ).length
-    const reportsReady = orders.filter((o) => o.status === "Completed").length
-    const activeCritical = criticalAlerts.filter(
-      (a) => a.status === "Active Alert" || a.status === "Escalated"
-    ).length
-
-    return {
-      pendingDraws,
-      workbenchPending,
-      reportsReady,
-      activeCritical,
-    }
-  }, [orders, specimens, criticalAlerts])
+  const pendingDraws = useMemo(
+    () => specimens.filter((s) => s.status === "Collection Pending" || s.status === "Recollection Requested").length,
+    [specimens]
+  )
+  const benchCount = useMemo(
+    () => orders.filter((o) => o.status === "Sample Collected" || o.status === "In Progress").length,
+    [orders]
+  )
+  const reportsCount = useMemo(
+    () => orders.filter((o) => o.status === "Completed").length,
+    [orders]
+  )
+  const activePanicCount = useMemo(
+    () => criticalAlerts.filter((a) => a.status === "Active Alert" || a.status === "Escalated").length,
+    [criticalAlerts]
+  )
 
   const handleTabChange = (tabId: LisSubModule) => {
-    const normalized = normalizeKey(tabId)
-    setCurrentTab(normalized)
+    setCurrentTab(tabId)
     if (onNavigate) {
-      onNavigate(normalized)
+      onNavigate(tabId)
     }
   }
 
@@ -203,276 +211,367 @@ export default function LaboratoryManagementSuite({
     handleTabChange("lab_workbench")
   }
 
-  const currentHeader = MODULE_HEADER_INFO[currentTab] || {
-    title: "Laboratory Diagnostic System",
-    subtitle: "Enterprise Diagnostic Workflow: Doctor Order → Specimen Collection → Bench Testing → Pathologist Review → Report Distribution",
-    badge: "NABL & CAP Certified",
-  }
-
-  // Navigation tab definitions
-  const tabs = [
+  const navItems = [
     {
       id: "lab_dashboard" as LisSubModule,
       label: "Lab Dashboard",
       icon: LayoutDashboard,
       badge: null,
-      desc: "Live clinic pulse & workload",
     },
     {
       id: "lab_orders_collection" as LisSubModule,
-      label: "Lab Orders & Collection",
+      label: "Orders & Phlebotomy",
       icon: ClipboardList,
-      badge: counts.pendingDraws > 0 ? `${counts.pendingDraws} pending` : null,
-      badgeColor: "bg-amber-100 text-amber-800",
-      desc: "Intake & specimen collection",
+      badge: pendingDraws > 0 ? `${pendingDraws} draws` : null,
+      badgeColor: "bg-[#D99A25]/15 text-[#D99A25]",
     },
     {
       id: "lab_workbench" as LisSubModule,
       label: "Lab Workbench",
       icon: Microscope,
-      badge: counts.workbenchPending > 0 ? `${counts.workbenchPending} in bench` : null,
-      badgeColor: "bg-teal-100 text-teal-800",
-      desc: "Benches, entry & approval",
+      badge: benchCount > 0 ? `${benchCount} pending` : null,
+      badgeColor: "bg-[#167D8D]/15 text-[#167D8D]",
     },
     {
       id: "lab_reports" as LisSubModule,
-      label: "Lab Reports",
+      label: "Diagnostic Reports",
       icon: FileCheck2,
-      badge: counts.reportsReady > 0 ? `${counts.reportsReady} approved` : null,
-      badgeColor: "bg-emerald-100 text-emerald-800",
-      desc: "Official printable reports",
+      badge: reportsCount > 0 ? `${reportsCount} ready` : null,
+      badgeColor: "bg-[#168568]/15 text-[#168568]",
     },
     {
       id: "lab_inventory" as LisSubModule,
-      label: "Lab Inventory & Consumables",
+      label: "Reagents & Stock",
       icon: Boxes,
       badge: null,
-      desc: "Kits & vacuum tubes",
     },
     {
       id: "lab_quality_analytics" as LisSubModule,
-      label: "Quality & Analytics",
+      label: "Quality & QC",
       icon: LineChart,
       badge: null,
-      desc: "Westgard rules & TAT SLAs",
     },
     {
       id: "lab_admin_config" as LisSubModule,
-      label: "Admin Configuration",
+      label: "Test Master",
       icon: Settings,
       badge: "206 tests",
-      badgeColor: "bg-purple-100 text-[#7552B8]",
-      desc: "Tariffs & reference intervals",
+      badgeColor: "bg-slate-700/40 text-slate-300",
     },
   ]
 
-
+  const activeHeader = MODULE_HEADER_INFO[currentTab] || MODULE_HEADER_INFO["lab_dashboard"]
 
   return (
-    <div className="min-h-screen bg-[#F4F6FA] text-slate-800 p-6 space-y-4">
-      {/* ── 1. UNIFIED LIS MASTER HEADER (INSURANCE COMMAND STYLE) ─────────── */}
-      <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-[#7552B8] text-white flex items-center justify-center shadow-sm shrink-0">
-              <FlaskConical size={22} className="fill-white/20" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                  {currentHeader.title}
-                </h1>
-                {currentHeader.badge && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-100 text-[#7552B8] uppercase tracking-wider">
-                    {currentHeader.badge}
-                  </span>
-                )}
+    <div className="min-h-screen bg-[#F4F7FA] flex text-[#172B3A] font-sans antialiased">
+      {/* ── 1. COLLAPSIBLE CLINICAL LABORATORY SIDEBAR ──────────────────────── */}
+      <aside
+        className={`bg-[#14243A] text-white flex flex-col shrink-0 transition-all duration-300 z-20 border-r border-[#1E3550] ${
+          isSidebarCollapsed ? "w-18" : "w-64"
+        }`}
+      >
+        {/* Sidebar Brand Header */}
+        <div className="h-16 px-4 flex items-center justify-between border-b border-[#1E3550]">
+          {!isSidebarCollapsed ? (
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <div className="w-9 h-9 rounded-xl bg-[#167D8D] flex items-center justify-center shrink-0 shadow-sm text-white">
+                <FlaskConical className="w-5 h-5" />
               </div>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
-                {currentHeader.subtitle}
-              </p>
+              <div className="min-w-0">
+                <div className="text-xs font-black tracking-wider uppercase text-white truncate">Imperial Lab</div>
+                <div className="text-[10px] text-slate-400 truncate">LIS Clinical Suite</div>
+              </div>
             </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5">
-            {/* Date Range / Today Indicator */}
-            <div className="bg-white border border-slate-200/90 rounded-xl px-3.5 py-2 flex items-center gap-2 text-xs font-semibold text-slate-700 shadow-2xs">
-              <Calendar size={14} className="text-slate-400" />
-              <span>Today, {new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}</span>
+          ) : (
+            <div className="w-9 h-9 mx-auto rounded-xl bg-[#167D8D] flex items-center justify-center text-white">
+              <FlaskConical className="w-5 h-5" />
             </div>
-
-            {/* Critical Panic Limits Alert (if active) */}
-            {counts.activeCritical > 0 && (
-              <button
-                type="button"
-                onClick={() => handleTabChange("lab_workbench")}
-                className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer animate-pulse"
-              >
-                <AlertTriangle size={14} />
-                <span>{counts.activeCritical} Panic Limits</span>
-              </button>
-            )}
-
-            {/* SOP & Rules Button */}
-            <button
-              type="button"
-              onClick={() => setShowGuide(!showGuide)}
-              className="bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/90 rounded-xl px-3.5 py-2 text-xs font-bold text-indigo-800 flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
-            >
-              <BookOpen size={14} className="text-indigo-600" />
-              <span>{showGuide ? "Hide SOP Guide" : "Lab SOP & Rules"}</span>
-            </button>
-
-            {/* Refresh */}
-            <button
-              type="button"
-              onClick={loadData}
-              className="bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
-              title="Refresh Diagnostic Queues"
-            >
-              <RefreshCw size={14} className="text-slate-500" />
-              <span>Refresh</span>
-            </button>
-
-            {/* Primary Action: New Lab Order */}
-            <button
-              type="button"
-              onClick={() => handleTabChange("lab_orders_collection")}
-              className="bg-[#7552B8] hover:bg-[#63439e] text-white rounded-xl px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer active:scale-95"
-            >
-              <Plus size={15} />
-              <span>New Lab Order</span>
-            </button>
-          </div>
+          )}
+          <button
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#1E3550] transition cursor-pointer"
+            title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isSidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+          </button>
         </div>
 
-
-
-        {/* ── 3. COLLAPSIBLE "HOW LAB WORKS" QUICK GUIDE BANNER ──────────────── */}
-        {showGuide && (
-          <div className="bg-gradient-to-r from-purple-50 via-indigo-50 to-white border border-purple-200 rounded-xl p-4 shadow-2xs text-xs space-y-3 relative">
-            <button
-              onClick={() => setShowGuide(false)}
-              className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            <div className="flex items-center gap-2 text-[#7552B8] font-black text-sm">
-              <Sparkles className="w-4 h-4" />
-              <span>Diagnostic Operations Quick Reference Guide</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-slate-700">
-              <div className="bg-white/80 p-3 rounded-lg border border-purple-100 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <CreditCard className="w-3.5 h-3.5 text-amber-600" />
-                  <span>1. Billing Clearance</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  Doctor prescribes tests in OPD/IPD. Tests show as <strong className="text-amber-700">Awaiting Billing</strong> until settled at the Billing counter or quick-authorized.
-                </p>
-              </div>
-
-              <div className="bg-white/80 p-3 rounded-lg border border-purple-100 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <Syringe className="w-3.5 h-3.5 text-purple-600" />
-                  <span>2. Color-Coded Tubes</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  <strong className="text-purple-700">Lavender:</strong> EDTA (CBC, ESR) · <strong className="text-rose-700">Red/Gold:</strong> Gel SST (LFT, RFT, Lipids) · <strong className="text-slate-700">Grey:</strong> Fluoride (Glucose).
-                </p>
-              </div>
-
-              <div className="bg-white/80 p-3 rounded-lg border border-purple-100 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <Microscope className="w-3.5 h-3.5 text-teal-600" />
-                  <span>3. Bench & Panic Limits</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  Values entered trigger automated flags (<span className="text-amber-600 font-bold">▲ High</span>, <span className="text-blue-600 font-bold">▼ Low</span>, or <span className="text-rose-600 font-bold animate-pulse">CRITICAL</span>). Critical values immediately notify ordering doctors.
-                </p>
-              </div>
-
-              <div className="bg-white/80 p-3 rounded-lg border border-purple-100 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <FileCheck2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>4. Report Release</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  Pathologist verifies and signs the order. It renders in authentic Imperial Hospital letterhead with print & PDF export for clinical discharge and doctor review.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── SUB-MODULE NAVIGATION TABS (CLEAN ENTERPRISE PILLS) ───────── */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-3 border-t border-slate-100">
-          {tabs.map((tab) => {
-            const Icon = tab.icon
-            const isActive = currentTab === tab.id
-
+        {/* Navigation Items List */}
+        <div className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const isActive = currentTab === item.id
             return (
               <button
-                key={tab.id}
-                type="button"
-                onClick={() => handleTabChange(tab.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer shrink-0 border ${
+                key={item.id}
+                onClick={() => handleTabChange(item.id)}
+                title={isSidebarCollapsed ? item.label : undefined}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   isActive
-                    ? "bg-[#7552B8] text-white border-[#7552B8] shadow-xs"
-                    : "bg-slate-50/70 text-slate-600 border-slate-200/80 hover:bg-slate-100 hover:text-slate-900"
-                }`}
+                    ? "bg-[#167D8D] text-white shadow-sm font-extrabold"
+                    : "text-slate-300 hover:bg-[#1E3550] hover:text-white"
+                } ${isSidebarCollapsed ? "justify-center" : ""}`}
               >
-                <Icon size={15} className={isActive ? "text-white" : "text-slate-500"} />
-                <span>{tab.label}</span>
-                {tab.badge && (
-                  <span
-                    className={`ml-1 px-2 py-0.5 rounded-full text-[10px] font-black tracking-wide ${
-                      isActive ? "bg-white/20 text-white" : tab.badgeColor || "bg-slate-200 text-slate-700"
-                    }`}
-                  >
-                    {tab.badge}
-                  </span>
+                <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-white" : "text-slate-400"}`} />
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 flex items-center justify-between text-left truncate">
+                    <span className="truncate">{item.label}</span>
+                    {item.badge && (
+                      <span
+                        className={`ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-black tracking-wide shrink-0 ${
+                          isActive ? "bg-white/20 text-white" : item.badgeColor || "bg-[#1E3550] text-slate-300"
+                        }`}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
                 )}
               </button>
             )
           })}
         </div>
+
+        {/* Sidebar Footer: Critical Alerts Quick Launcher & Guide */}
+        <div className="p-3 border-t border-[#1E3550] space-y-2">
+          {/* Critical Panic Button */}
+          <button
+            onClick={() => setShowCriticalModal(true)}
+            className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              activePanicCount > 0
+                ? "bg-[#C93645] text-white animate-pulse"
+                : "bg-[#1E3550] text-slate-300 hover:text-white"
+            } ${isSidebarCollapsed ? "justify-center" : ""}`}
+            title="Critical Panic Results"
+          >
+            <AlertTriangle className="w-4 h-4 shrink-0" />
+            {!isSidebarCollapsed && (
+              <div className="flex-1 flex items-center justify-between">
+                <span>Panic Alerts</span>
+                <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-black">
+                  {activePanicCount}
+                </span>
+              </div>
+            )}
+          </button>
+
+          {/* Quick SOP Guide Button */}
+          <button
+            onClick={() => setShowGuide(!showGuide)}
+            className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-[#1E3550] hover:text-white transition cursor-pointer ${
+              isSidebarCollapsed ? "justify-center" : ""
+            }`}
+            title="How Lab Works Guide"
+          >
+            <HelpCircle className="w-4 h-4 shrink-0 text-slate-400" />
+            {!isSidebarCollapsed && <span>How Lab Works</span>}
+          </button>
+        </div>
+      </aside>
+
+      {/* ── 2. MAIN APPLICATION CONTENT AREA ────────────────────────────────── */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        {/* Global Executive Header */}
+        <header className="bg-white border-b border-[#DCE4EC] sticky top-0 z-10 px-6 py-3.5 shadow-2xs">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            {/* Breadcrumb & Module Title */}
+            <div>
+              <div className="flex items-center gap-2 text-[11px] font-semibold text-[#64748B] mb-1">
+                <span>Imperial Hospital</span>
+                <span>/</span>
+                <span>Central Laboratory</span>
+                <span>/</span>
+                <span className="text-[#167D8D] font-bold">{activeHeader.breadcrumb}</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-xl font-black text-[#14243A] tracking-tight">{activeHeader.title}</h1>
+                {activeHeader.badge && (
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wide bg-[#167D8D]/10 text-[#167D8D] border border-[#167D8D]/20">
+                    {activeHeader.badge}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-[#64748B] mt-0.5">{activeHeader.subtitle}</p>
+            </div>
+
+            {/* Right Action Tools */}
+            <div className="flex items-center gap-2.5">
+              {/* Date / Shift Pill */}
+              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#F4F7FA] border border-[#DCE4EC] rounded-xl text-xs font-bold text-[#64748B]">
+                <Calendar className="w-3.5 h-3.5 text-[#167D8D]" />
+                <span>01 Oct 2026 – Today</span>
+              </div>
+
+              {/* SOP Guide Toggle */}
+              <button
+                type="button"
+                onClick={() => setShowGuide(!showGuide)}
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-[#F4F7FA] hover:bg-slate-100 border border-[#DCE4EC] rounded-xl text-xs font-bold text-[#14243A] transition cursor-pointer"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-[#167D8D]" />
+                <span>Dept SOP</span>
+              </button>
+
+              {/* Panic Limits Alert Badge */}
+              <button
+                type="button"
+                onClick={() => setShowCriticalModal(true)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-xl text-xs font-bold transition cursor-pointer ${
+                  activePanicCount > 0
+                    ? "bg-[#C93645]/10 border-[#C93645]/30 text-[#C93645] hover:bg-[#C93645]/20 animate-pulse"
+                    : "bg-[#F4F7FA] border-[#DCE4EC] text-[#64748B] hover:bg-slate-100"
+                }`}
+              >
+                <AlertTriangle className="w-3.5 h-3.5" />
+                <span>{activePanicCount} Critical Panic</span>
+              </button>
+
+              {/* Quick Refresh */}
+              <button
+                type="button"
+                onClick={loadData}
+                title="Refresh Live Data"
+                className="p-2 bg-[#F4F7FA] hover:bg-slate-100 border border-[#DCE4EC] rounded-xl text-[#64748B] hover:text-[#14243A] transition cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Primary Action Button */}
+              <button
+                type="button"
+                onClick={() => handleTabChange("lab_orders_collection")}
+                className="flex items-center gap-1.5 px-4 py-2 bg-[#167D8D] hover:bg-[#136674] text-white text-xs font-bold rounded-xl shadow-xs transition cursor-pointer"
+              >
+                <Plus className="w-4 h-4" />
+                <span>+ New Lab Order</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Collapsible SOP Quick Guide Banner */}
+        {showGuide && (
+          <div className="bg-gradient-to-r from-[#F4F7FA] via-white to-[#F4F7FA] border-b border-[#DCE4EC] p-4 text-xs relative animate-in fade-in duration-200">
+            <button
+              onClick={() => setShowGuide(false)}
+              className="absolute top-3 right-4 text-slate-400 hover:text-slate-600 cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="flex items-center gap-2 text-[#167D8D] font-bold text-sm mb-3">
+              <Sparkles className="w-4 h-4" />
+              <span>Imperial Clinical Diagnostic Pathway & Quality Standard</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <div className="bg-white p-3 rounded-xl border border-[#DCE4EC] shadow-2xs space-y-1">
+                <div className="font-bold text-[#14243A] flex items-center gap-1.5">
+                  <CreditCard className="w-3.5 h-3.5 text-[#D99A25]" />
+                  <span>1. Billing Clearance</span>
+                </div>
+                <p className="text-[11px] text-[#64748B]">
+                  Doctor orders in OPD/IPD. Tests remain in Awaiting Billing until settled or emergency authorized.
+                </p>
+              </div>
+              <div className="bg-white p-3 rounded-xl border border-[#DCE4EC] shadow-2xs space-y-1">
+                <div className="font-bold text-[#14243A] flex items-center gap-1.5">
+                  <Syringe className="w-3.5 h-3.5 text-[#167D8D]" />
+                  <span>2. Color-Coded Phlebotomy</span>
+                </div>
+                <p className="text-[11px] text-[#64748B]">
+                  Lavender (EDTA: CBC), Gold/Red (SST: LFT/RFT), Light Blue (Citrate: PT/INR), Grey (Fluoride: Sugar).
+                </p>
+              </div>
+              <div className="bg-white p-3 rounded-xl border border-[#DCE4EC] shadow-2xs space-y-1">
+                <div className="font-bold text-[#14243A] flex items-center gap-1.5">
+                  <Microscope className="w-3.5 h-3.5 text-[#14243A]" />
+                  <span>3. Bench & Panic Limits</span>
+                </div>
+                <p className="text-[11px] text-[#64748B]">
+                  Automated flags for abnormal results. Panic values alert clinicians immediately with mandatory readback.
+                </p>
+              </div>
+              <div className="bg-white p-3 rounded-xl border border-[#DCE4EC] shadow-2xs space-y-1">
+                <div className="font-bold text-[#14243A] flex items-center gap-1.5">
+                  <FileCheck2 className="w-3.5 h-3.5 text-[#168568]" />
+                  <span>4. Pathologist Release</span>
+                </div>
+                <p className="text-[11px] text-[#64748B]">
+                  Verified and digitally signed reports generate in official Imperial Hospital letterhead with QR code.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── 3. SUB-MODULE VIEW WORKSPACE RENDERING ─────────────────────────── */}
+        <main className="flex-1 p-6">
+          {currentTab === "lab_dashboard" && (
+            <LabDashboardView
+              onNavigate={(mod) => handleTabChange(normalizeKey(mod))}
+              onOpenOrder={(ord) => handleOpenBenchWithOrder(ord)}
+            />
+          )}
+
+          {currentTab === "lab_orders_collection" && (
+            <LabOrdersAndCollectionView
+              onOpenWorkbench={(ord, t) => handleOpenBenchWithOrder(ord, t)}
+              onOpenReport={() => handleTabChange("lab_reports")}
+            />
+          )}
+
+          {currentTab === "lab_workbench" && (
+            <LabWorkbenchView
+              initialOrder={activeOrderForBench || undefined}
+              initialTest={activeTestForBench || undefined}
+              onCompleteToReports={() => handleTabChange("lab_reports")}
+            />
+          )}
+
+          {currentTab === "lab_reports" && <LabReportsView />}
+
+          {currentTab === "lab_inventory" && <LaboratoryInventory technician={technician} />}
+
+          {currentTab === "lab_quality_analytics" && <QualityControlView />}
+
+          {currentTab === "lab_admin_config" && <AdminConfigurationView />}
+        </main>
       </div>
 
-      {/* ── 5. ACTIVE SUB-MODULE WORKSPACES RENDERING ───────────────────────── */}
-      <div className="transition-all">
-        {currentTab === "lab_dashboard" && (
-          <LabDashboardView
-            onNavigate={(mod) => handleTabChange(normalizeKey(mod))}
-            onOpenOrder={(ord) => handleOpenBenchWithOrder(ord)}
-          />
-        )}
-
-        {currentTab === "lab_orders_collection" && (
-          <LabOrdersAndCollectionView
-            onOpenWorkbench={(ord, t) => handleOpenBenchWithOrder(ord, t)}
-            onOpenReport={() => handleTabChange("lab_reports")}
-          />
-        )}
-
-        {currentTab === "lab_workbench" && (
-          <LabWorkbenchView
-            initialOrder={activeOrderForBench || undefined}
-            initialTest={activeTestForBench || undefined}
-            onCompleteToReports={() => handleTabChange("lab_reports")}
-          />
-        )}
-
-        {currentTab === "lab_reports" && <LabReportsView />}
-
-        {currentTab === "lab_inventory" && <LaboratoryInventory />}
-
-        {currentTab === "lab_quality_analytics" && <QualityControlView />}
-
-        {currentTab === "lab_admin_config" && <AdminConfigurationView />}
-      </div>
+      {/* ── 4. CRITICAL PANIC LIMITS MODAL DIALOG ──────────────────────────── */}
+      {showCriticalModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#14243A]/70 backdrop-blur-xs p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl border border-[#DCE4EC] w-full max-w-5xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="bg-[#C93645] px-6 py-4 flex items-center justify-between text-white">
+              <div className="flex items-center gap-3">
+                <ShieldAlert className="w-6 h-6 animate-pulse" />
+                <div>
+                  <h3 className="text-base font-black tracking-tight">Critical Panic Limits Command Queue</h3>
+                  <p className="text-xs text-rose-100">
+                    Mandatory verbal readback & clinician notification registry (CAP / NABL safety standard)
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowCriticalModal(false)}
+                className="p-1.5 rounded-lg text-white/80 hover:text-white hover:bg-black/20 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 max-h-[80vh] overflow-y-auto bg-[#F4F7FA]">
+              <CriticalAlertsView />
+            </div>
+            <div className="bg-white px-6 py-3 border-t border-[#DCE4EC] flex justify-end">
+              <button
+                onClick={() => setShowCriticalModal(false)}
+                className="px-4 py-2 bg-[#14243A] hover:bg-[#1E3550] text-white text-xs font-bold rounded-xl transition cursor-pointer"
+              >
+                Close Queue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -97,9 +97,9 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
       )}
 
       {/* ── TOP BANNER ──────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-purple-100 text-[#7552B8] rounded-xl">
+          <div className="p-2 bg-[#167D8D]/10 text-[#167D8D] rounded-xl">
             <FileCheck className="w-5 h-5" />
           </div>
           <div>
@@ -116,7 +116,7 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
             type="text"
             value={pathologistName}
             onChange={(e) => setPathologistName(e.target.value)}
-            className="text-xs font-bold text-purple-900 bg-purple-50 border border-purple-200 rounded-lg px-2.5 py-1 w-64"
+            className="text-xs font-bold text-[#14243A] bg-[#167D8D]/5 border border-[#167D8D]/30 rounded-lg px-2.5 py-1 w-64"
           />
         </div>
       </div>
@@ -124,7 +124,7 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
       {/* ── TWO-PANEL REVIEW LAYOUT ─────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left Panel: Review Worklist Queue (4 cols) */}
-        <div className="lg:col-span-4 bg-white border border-[#E2E8F0] rounded-xl shadow-2xs p-3 space-y-3 flex flex-col h-[750px]">
+        <div className="lg:col-span-4 bg-white border border-[#DCE4EC] rounded-xl shadow-2xs p-3 space-y-3 flex flex-col h-[750px]">
           <div className="flex items-center justify-between border-b border-slate-100 pb-2">
             <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
               Diagnostic Queue ({reviewOrders.length})
@@ -157,7 +157,7 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
                   onClick={() => setSelectedOrderId(ord.id)}
                   className={`p-3 rounded-xl border transition-all cursor-pointer text-xs space-y-1 ${
                     isSelected
-                      ? "bg-purple-50/70 border-[#7552B8] shadow-xs ring-1 ring-[#7552B8]"
+                      ? "bg-[#167D8D]/5/70 border-[#167D8D] shadow-xs ring-1 ring-[#167D8D]"
                       : "bg-white border-slate-200 hover:border-slate-300"
                   }`}
                 >
@@ -190,7 +190,7 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
         </div>
 
         {/* Right Panel: Detailed Results & Authorization (8 cols) */}
-        <div className="lg:col-span-8 bg-white border border-[#E2E8F0] rounded-xl shadow-2xs p-5 space-y-4 flex flex-col justify-between h-[750px] overflow-y-auto">
+        <div className="lg:col-span-8 bg-white border border-[#DCE4EC] rounded-xl shadow-2xs p-5 space-y-4 flex flex-col justify-between h-[750px] overflow-y-auto">
           {selectedOrder ? (
             <div className="space-y-4">
               {/* Header Details */}
@@ -198,7 +198,7 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-black text-slate-900 text-sm">{selectedOrder.patientName}</span>
-                    <span className="font-mono text-purple-700 font-bold">({selectedOrder.umr})</span>
+                    <span className="font-mono text-[#167D8D] font-bold">({selectedOrder.umr})</span>
                   </div>
                   <div className="text-slate-500 text-[11px] mt-0.5">
                     Age/Sex: {selectedOrder.age}y/{selectedOrder.sex} · Doctor: {selectedOrder.doctorName} (
@@ -317,7 +317,7 @@ export default function PathologistReviewView({ initialOrderId }: PathologistRev
 
                 <div className="flex items-center justify-between pt-2">
                   <div className="text-[11px] text-slate-500">
-                    Signing as: <strong className="text-purple-900">{pathologistName}</strong>
+                    Signing as: <strong className="text-[#14243A]">{pathologistName}</strong>
                   </div>
 
                   <div className="flex items-center gap-2">

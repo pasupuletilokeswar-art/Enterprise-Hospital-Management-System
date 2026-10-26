@@ -45,9 +45,9 @@ export default function TestMasterView() {
   return (
     <div className="space-y-4">
       {/* ── TOP BANNER ──────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-purple-100 text-[#7552B8] rounded-xl">
+          <div className="p-2 bg-[#167D8D]/10 text-[#167D8D] rounded-xl">
             <BookOpen className="w-5 h-5" />
           </div>
           <div>
@@ -66,14 +66,14 @@ export default function TestMasterView() {
               placeholder="Search by test name, code, category..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl focus:outline-none w-64"
+              className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl focus:outline-none w-64"
             />
           </div>
 
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl text-slate-700 focus:outline-none"
+            className="px-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl text-slate-700 focus:outline-none"
           >
             {categories.map((c) => (
               <option key={c} value={c}>
@@ -85,11 +85,11 @@ export default function TestMasterView() {
       </div>
 
       {/* ── TEST CATALOG TABLE ──────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-[#E2E8F0] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-[#DCE4EC] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                 <th className="py-3 px-4">Test Code</th>
                 <th className="py-3 px-4">Investigation Name</th>
                 <th className="py-3 px-4">Department Category</th>
@@ -119,7 +119,7 @@ export default function TestMasterView() {
                     <td className="py-3 px-4 text-right">
                       <button
                         onClick={() => setSelectedTestDetail(test)}
-                        className="px-2.5 py-1 bg-slate-100 hover:bg-[#7552B8] hover:text-white text-slate-700 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1 ml-auto"
+                        className="px-2.5 py-1 bg-slate-100 hover:bg-[#167D8D] hover:text-white text-slate-700 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1 ml-auto"
                       >
                         <Eye className="w-3 h-3" />
                         <span>Parameters</span>
@@ -132,7 +132,7 @@ export default function TestMasterView() {
           </table>
         </div>
 
-        <div className="p-3 border-t border-[#E2E8F0] bg-slate-50/70 flex items-center justify-between text-xs text-slate-500">
+        <div className="p-3 border-t border-[#DCE4EC] bg-slate-50/70 flex items-center justify-between text-xs text-slate-500">
           <span>
             Showing <strong className="text-slate-800">{Math.min(30, filteredTests.length)}</strong> of{" "}
             <strong className="text-slate-800">{filteredTests.length}</strong> cataloged diagnostic investigations
@@ -198,7 +198,7 @@ export default function TestMasterView() {
             <div className="flex justify-end pt-2 border-t border-slate-100">
               <button
                 onClick={() => setSelectedTestDetail(null)}
-                className="px-4 py-1.5 bg-[#7552B8] text-white text-xs font-bold rounded-xl cursor-pointer"
+                className="px-4 py-1.5 bg-[#167D8D] text-white text-xs font-bold rounded-xl cursor-pointer"
               >
                 Close
               </button>

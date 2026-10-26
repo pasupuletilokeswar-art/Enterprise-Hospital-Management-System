@@ -394,12 +394,12 @@ export default function LaboratoryInventory({
       case "Out of Stock":
         return "bg-slate-100 text-slate-700 border-slate-300"
       default:
-        return "bg-gray-100 text-gray-700 border-gray-300"
+        return "bg-gray-100 text-gray-700 border-[#DCE4EC]"
     }
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F8FAFC] overflow-hidden text-gray-900 font-sans">
+    <div className="flex-1 flex flex-col bg-[#F4F7FA] overflow-hidden text-[#172B3A] font-sans">
       {/* Toast Alert */}
       {toastMessage && (
         <div
@@ -416,30 +416,30 @@ export default function LaboratoryInventory({
       )}
 
       {/* Inventory Tabs & Actions Bar */}
-      <div className="bg-white border-b border-gray-200 px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0">
+      <div className="bg-white border-b border-[#DCE4EC] px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0">
         <div className="flex items-center gap-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab("items")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-none border transition-colors flex items-center gap-2 cursor-pointer shadow-2xs ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-2 cursor-pointer shadow-2xs ${
               activeTab === "items"
                 ? "bg-white text-blue-700 border-blue-600 font-bold border-b-2"
-                : "bg-slate-200/70 text-gray-600 border-gray-300 hover:bg-white hover:text-gray-900"
+                : "bg-slate-200/70 text-[#64748B] border-[#DCE4EC] hover:bg-white hover:text-[#172B3A]"
             }`}
           >
-            <span>📦</span> Stock Items
+            <Boxes className="w-4 h-4 text-[#167D8D]" /><span>Stock Items</span>
             <span className="text-[10px] px-1.5 py-0.2 bg-slate-200 text-gray-700 font-mono font-bold">
               [{kpis.total}]
             </span>
           </button>
           <button
             onClick={() => setActiveTab("low_stock")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-none border transition-colors flex items-center gap-2 cursor-pointer shadow-2xs ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-2 cursor-pointer shadow-2xs ${
               activeTab === "low_stock"
                 ? "bg-white text-amber-800 border-amber-600 font-bold border-b-2"
-                : "bg-slate-200/70 text-gray-600 border-gray-300 hover:bg-white hover:text-gray-900"
+                : "bg-slate-200/70 text-[#64748B] border-[#DCE4EC] hover:bg-white hover:text-[#172B3A]"
             }`}
           >
-            <span>⚠️</span> Low Stock &amp; Shortages
+            <AlertTriangle className="w-4 h-4 text-[#D99A25]" /><span>Low Stock & Shortages</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 font-mono font-bold ${
                 kpis.lowStock > 0 ? "bg-amber-100 text-amber-800" : "bg-slate-200 text-gray-700"
@@ -450,13 +450,13 @@ export default function LaboratoryInventory({
           </button>
           <button
             onClick={() => setActiveTab("expiry")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-none border transition-colors flex items-center gap-2 cursor-pointer shadow-2xs ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-2 cursor-pointer shadow-2xs ${
               activeTab === "expiry"
                 ? "bg-white text-red-700 border-red-600 font-bold border-b-2"
-                : "bg-slate-200/70 text-gray-600 border-gray-300 hover:bg-white hover:text-gray-900"
+                : "bg-slate-200/70 text-[#64748B] border-[#DCE4EC] hover:bg-white hover:text-[#172B3A]"
             }`}
           >
-            <span>⏳</span> Expiry Watchlist
+            <Clock className="w-4 h-4 text-[#C93645]" /><span>Expiry Watchlist</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 font-mono font-bold ${
                 kpis.expiringSoon + kpis.expired > 0
@@ -469,26 +469,26 @@ export default function LaboratoryInventory({
           </button>
           <button
             onClick={() => setActiveTab("transactions")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-none border transition-colors flex items-center gap-2 cursor-pointer shadow-2xs ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-2 cursor-pointer shadow-2xs ${
               activeTab === "transactions"
                 ? "bg-white text-indigo-700 border-indigo-600 font-bold border-b-2"
-                : "bg-slate-200/70 text-gray-600 border-gray-300 hover:bg-white hover:text-gray-900"
+                : "bg-slate-200/70 text-[#64748B] border-[#DCE4EC] hover:bg-white hover:text-[#172B3A]"
             }`}
           >
-            <span>📝</span> Transaction History
+            <FileSpreadsheet className="w-4 h-4 text-[#14243A]" /><span>Transaction History</span>
             <span className="text-[10px] px-1.5 py-0.2 bg-slate-200 text-gray-700 font-mono font-bold">
               [{transactions.length}]
             </span>
           </button>
           <button
             onClick={() => setActiveTab("suppliers")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-none border transition-colors flex items-center gap-2 cursor-pointer shadow-2xs ${
+            className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl border transition-all flex items-center gap-2 cursor-pointer shadow-2xs ${
               activeTab === "suppliers"
                 ? "bg-white text-teal-800 border-teal-600 font-bold border-b-2"
-                : "bg-slate-200/70 text-gray-600 border-gray-300 hover:bg-white hover:text-gray-900"
+                : "bg-slate-200/70 text-[#64748B] border-[#DCE4EC] hover:bg-white hover:text-[#172B3A]"
             }`}
           >
-            <span>🏢</span> Suppliers Master
+            <Building2 className="w-4 h-4 text-[#168568]" /><span>Suppliers Master</span>
             <span className="text-[10px] px-1.5 py-0.2 bg-slate-200 text-gray-700 font-mono font-bold">
               [{suppliers.length}]
             </span>
@@ -499,16 +499,16 @@ export default function LaboratoryInventory({
           <button
             type="button"
             onClick={() => setShowSupplierModal(true)}
-            className="px-3.5 py-1.5 text-xs font-semibold rounded-none border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs"
+            className="px-3.5 py-1.5 text-xs font-semibold rounded-xl border border-[#DCE4EC] bg-white text-[#172B3A] hover:bg-gray-50 transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs"
           >
-            <span>🏢</span> Suppliers Directory
+            <Building2 className="w-4 h-4" /><span>Suppliers Directory</span>
           </button>
           <button
             type="button"
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-none shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer bg-[#167D8D] hover:bg-[#136674]"
           >
-            <span className="font-bold text-sm leading-none">+</span> Add Stock Item
+            <Plus className="w-4 h-4" /><span>Add Stock Item</span>
           </button>
         </div>
       </div>
@@ -517,15 +517,15 @@ export default function LaboratoryInventory({
       <div className="flex-1 overflow-y-auto p-6 space-y-5 flex flex-col">
         {/* KPI Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3.5 shrink-0">
-          <div className="bg-white border border-gray-200 border-l-4 border-l-blue-600 rounded-none p-3.5 shadow-2xs">
-            <span className="text-gray-500 block text-[10.5px] font-semibold uppercase tracking-wider">
+          <div className="bg-white border border-[#DCE4EC] rounded-2xl p-4 shadow-2xs">
+            <span className="text-[#64748B] block text-[10.5px] font-semibold uppercase tracking-wider">
               Total Items
             </span>
-            <strong className="text-2xl font-bold text-gray-900 mt-1 block">
+            <strong className="text-2xl font-bold text-[#172B3A] mt-1 block">
               {kpis.total}
             </strong>
           </div>
-          <div className="bg-white border border-gray-200 border-l-4 border-l-emerald-600 rounded-none p-3.5 shadow-2xs">
+          <div className="bg-white border border-[#DCE4EC] rounded-2xl p-4 shadow-2xs">
             <span className="text-emerald-700 block text-[10.5px] font-semibold uppercase tracking-wider">
               In Stock
             </span>
@@ -533,7 +533,7 @@ export default function LaboratoryInventory({
               {kpis.inStock}
             </strong>
           </div>
-          <div className="bg-white border border-gray-200 border-l-4 border-l-amber-500 rounded-none p-3.5 shadow-2xs">
+          <div className="bg-white border border-[#DCE4EC] rounded-2xl p-4 shadow-2xs">
             <span className="text-amber-700 block text-[10.5px] font-semibold uppercase tracking-wider">
               Low Stock
             </span>
@@ -541,7 +541,7 @@ export default function LaboratoryInventory({
               {kpis.lowStock}
             </strong>
           </div>
-          <div className="bg-white border border-gray-200 border-l-4 border-l-orange-500 rounded-none p-3.5 shadow-2xs">
+          <div className="bg-white border border-[#DCE4EC] rounded-2xl p-4 shadow-2xs">
             <span className="text-orange-700 block text-[10.5px] font-semibold uppercase tracking-wider">
               Expiring Soon
             </span>
@@ -549,7 +549,7 @@ export default function LaboratoryInventory({
               {kpis.expiringSoon}
             </strong>
           </div>
-          <div className="bg-white border border-gray-200 border-l-4 border-l-red-600 rounded-none p-3.5 shadow-2xs">
+          <div className="bg-white border border-[#DCE4EC] rounded-2xl p-4 shadow-2xs">
             <span className="text-red-700 block text-[10.5px] font-semibold uppercase tracking-wider">
               Expired
             </span>
@@ -557,7 +557,7 @@ export default function LaboratoryInventory({
               {kpis.expired}
             </strong>
           </div>
-          <div className="bg-white border border-gray-200 border-l-4 border-l-slate-500 rounded-none p-3.5 shadow-2xs">
+          <div className="bg-white border border-[#DCE4EC] rounded-2xl p-4 shadow-2xs">
             <span className="text-slate-600 block text-[10.5px] font-semibold uppercase tracking-wider">
               Out of Stock
             </span>
@@ -571,16 +571,16 @@ export default function LaboratoryInventory({
         {/* VIEW 1: STOCK ITEMS TABLE                                                 */}
         {/* ========================================================================= */}
         {activeTab === "items" && (
-          <div className="bg-white border border-gray-200 rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
             {/* Toolbar Filters */}
-            <div className="p-3.5 bg-slate-50/70 border-b border-gray-200 flex flex-wrap items-center justify-between gap-3">
+            <div className="p-3.5 bg-slate-50/70 border-b border-[#DCE4EC] flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5 flex-1 max-w-md">
                 <input
                   type="text"
                   placeholder="Search item name, code, batch, supplier..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-gray-300 rounded-none focus:outline-none focus:border-blue-600"
+                  className="w-full px-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600"
                 />
               </div>
 
@@ -588,7 +588,7 @@ export default function LaboratoryInventory({
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-white border border-gray-300 rounded-none focus:outline-none focus:border-blue-600"
+                  className="px-2.5 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600"
                 >
                   <option value="all">All Categories</option>
                   {CATEGORIES.map((c) => (
@@ -601,7 +601,7 @@ export default function LaboratoryInventory({
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-white border border-gray-300 rounded-none focus:outline-none focus:border-blue-600"
+                  className="px-2.5 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600"
                 >
                   <option value="all">All Statuses</option>
                   <option value="In Stock">In Stock</option>
@@ -618,7 +618,7 @@ export default function LaboratoryInventory({
                       setStatusFilter("all")
                       setSearchQuery("")
                     }}
-                    className="px-2.5 py-1.5 text-xs text-gray-500 hover:text-gray-800 border border-gray-300 bg-white"
+                    className="px-2.5 py-1.5 text-xs text-[#64748B] hover:text-gray-800 border border-[#DCE4EC] bg-white"
                   >
                     Clear Filters
                   </button>
@@ -629,12 +629,12 @@ export default function LaboratoryInventory({
             {/* Table */}
             <div className="flex-1 overflow-x-auto overflow-y-auto min-h-[360px]">
               {filteredItems.length === 0 ? (
-                <div className="py-20 text-center text-gray-500">
+                <div className="py-20 text-center text-[#64748B]">
                   <div className="text-3xl mb-2">📦</div>
                   <h3 className="text-sm font-bold text-gray-800">
                     No laboratory inventory records available.
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
+                  <p className="text-xs text-[#64748B] mt-1 max-w-sm mx-auto">
                     {searchQuery || categoryFilter !== "all" || statusFilter !== "all"
                       ? "No stock items match your search or filter criteria."
                       : "Click '+ Add Stock Item' above to register reagents, test kits, or consumables."}
@@ -650,7 +650,7 @@ export default function LaboratoryInventory({
                 </div>
               ) : (
                 <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-slate-100/90 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-gray-200 sticky top-0 z-10">
+                  <thead className="bg-slate-100/90 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-[#DCE4EC] sticky top-0 z-10">
                     <tr>
                       <th className="py-2.5 px-3">Item Details</th>
                       <th className="py-2.5 px-3">Category</th>
@@ -666,27 +666,27 @@ export default function LaboratoryInventory({
                   <tbody className="divide-y divide-gray-200">
                     {filteredItems.map((item) => (
                       <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="py-2.5 px-3 font-semibold text-gray-900">
+                        <td className="py-2.5 px-3 font-semibold text-[#172B3A]">
                           <div>{item.name}</div>
                           {item.storageLocation && (
-                            <div className="text-[10px] text-gray-500 font-normal">
+                            <div className="text-[10px] text-[#64748B] font-normal">
                               📍 {item.storageLocation}
                             </div>
                           )}
                         </td>
-                        <td className="py-2.5 px-3 text-gray-600">{item.category}</td>
-                        <td className="py-2.5 px-3 font-mono text-gray-600">
+                        <td className="py-2.5 px-3 text-[#64748B]">{item.category}</td>
+                        <td className="py-2.5 px-3 font-mono text-[#64748B]">
                           <div>{item.batchNumber}</div>
                           <div className="text-[10px] text-gray-400">{item.itemCode}</div>
                         </td>
                         <td className="py-2.5 px-3 text-gray-700">{item.supplier}</td>
-                        <td className="py-2.5 px-3 text-right font-mono font-bold text-gray-900">
+                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#172B3A]">
                           {item.quantity}{" "}
-                          <span className="text-[10px] font-normal text-gray-500 font-sans">
+                          <span className="text-[10px] font-normal text-[#64748B] font-sans">
                             {item.unit}
                           </span>
                         </td>
-                        <td className="py-2.5 px-3 text-right font-mono text-gray-600">
+                        <td className="py-2.5 px-3 text-right font-mono text-[#64748B]">
                           {item.minimumStock}
                         </td>
                         <td className="py-2.5 px-3 font-mono text-gray-700">
@@ -726,7 +726,7 @@ export default function LaboratoryInventory({
                                   reason: "Physical audit reconciliation",
                                 })
                               }}
-                              className="px-2 py-1 text-[11px] font-semibold text-gray-700 bg-slate-100 hover:bg-slate-200 border border-gray-300 rounded-none cursor-pointer"
+                              className="px-2 py-1 text-[11px] font-semibold text-gray-700 bg-slate-100 hover:bg-slate-200 border border-[#DCE4EC] rounded-none cursor-pointer"
                               title="Adjust Count"
                             >
                               Adjust
@@ -783,8 +783,8 @@ export default function LaboratoryInventory({
         {/* VIEW 2: LOW STOCK & SHORTAGES                                             */}
         {/* ========================================================================= */}
         {activeTab === "low_stock" && (
-          <div className="bg-white border border-gray-200 rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-gray-200 bg-amber-50/40 flex items-center justify-between">
+          <div className="bg-white border border-[#DCE4EC] rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-[#DCE4EC] bg-amber-50/40 flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-bold text-amber-900">
                   Critical Low Stock &amp; Depleted Reagents
@@ -801,19 +801,19 @@ export default function LaboratoryInventory({
 
             <div className="flex-1 overflow-x-auto overflow-y-auto min-h-[360px]">
               {lowStockItems.length === 0 ? (
-                <div className="py-20 text-center text-gray-500">
+                <div className="py-20 text-center text-[#64748B]">
                   <div className="text-3xl mb-2">✓</div>
                   <h3 className="text-sm font-bold text-gray-800">
                     No low stock alerts detected.
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-[#64748B] mt-1">
                     All reagents, calibrators, and consumables are currently above minimum safety
                     levels.
                   </p>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-gray-200">
+                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-[#DCE4EC]">
                     <tr>
                       <th className="py-2.5 px-4">Item Name</th>
                       <th className="py-2.5 px-3">Category</th>
@@ -830,13 +830,13 @@ export default function LaboratoryInventory({
                       const shortage = Math.max(0, item.minimumStock - item.quantity)
                       return (
                         <tr key={item.id} className="hover:bg-amber-50/30">
-                          <td className="py-2.5 px-4 font-semibold text-gray-900">
+                          <td className="py-2.5 px-4 font-semibold text-[#172B3A]">
                             <div>{item.name}</div>
-                            <span className="font-mono text-[10px] text-gray-500">
+                            <span className="font-mono text-[10px] text-[#64748B]">
                               Batch: {item.batchNumber}
                             </span>
                           </td>
-                          <td className="py-2.5 px-3 text-gray-600">{item.category}</td>
+                          <td className="py-2.5 px-3 text-[#64748B]">{item.category}</td>
                           <td className="py-2.5 px-3 text-right font-mono font-bold text-red-700">
                             {item.quantity} {item.unit}
                           </td>
@@ -884,8 +884,8 @@ export default function LaboratoryInventory({
         {/* VIEW 3: EXPIRY WATCHLIST                                                  */}
         {/* ========================================================================= */}
         {activeTab === "expiry" && (
-          <div className="bg-white border border-gray-200 rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-gray-200 bg-red-50/40 flex items-center justify-between">
+          <div className="bg-white border border-[#DCE4EC] rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-[#DCE4EC] bg-red-50/40 flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-bold text-red-900">
                   Reagent &amp; Test Kit Expiration Watchlist
@@ -902,19 +902,19 @@ export default function LaboratoryInventory({
 
             <div className="flex-1 overflow-x-auto overflow-y-auto min-h-[360px]">
               {expiryWatchlistItems.length === 0 ? (
-                <div className="py-20 text-center text-gray-500">
+                <div className="py-20 text-center text-[#64748B]">
                   <div className="text-3xl mb-2">✓</div>
                   <h3 className="text-sm font-bold text-gray-800">
                     No expiring or expired reagents found.
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-[#64748B] mt-1">
                     All stored inventory lots are safely within their manufacturer validity
                     windows.
                   </p>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-gray-200">
+                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-[#DCE4EC]">
                     <tr>
                       <th className="py-2.5 px-4">Item Details</th>
                       <th className="py-2.5 px-3">Batch</th>
@@ -928,9 +928,9 @@ export default function LaboratoryInventory({
                   <tbody className="divide-y divide-gray-200">
                     {expiryWatchlistItems.map((item) => (
                       <tr key={item.id} className="hover:bg-red-50/30">
-                        <td className="py-2.5 px-4 font-semibold text-gray-900">
+                        <td className="py-2.5 px-4 font-semibold text-[#172B3A]">
                           <div>{item.name}</div>
-                          <span className="text-[10px] text-gray-500 font-normal">
+                          <span className="text-[10px] text-[#64748B] font-normal">
                             {item.category}
                           </span>
                         </td>
@@ -940,10 +940,10 @@ export default function LaboratoryInventory({
                         <td className="py-2.5 px-3 font-mono font-bold text-red-800">
                           {item.expiryDate}
                         </td>
-                        <td className="py-2.5 px-3 text-right font-mono font-bold text-gray-900">
+                        <td className="py-2.5 px-3 text-right font-mono font-bold text-[#172B3A]">
                           {item.quantity} {item.unit}
                         </td>
-                        <td className="py-2.5 px-4 text-gray-600">
+                        <td className="py-2.5 px-4 text-[#64748B]">
                           {item.storageLocation || "Standard Storage"}
                         </td>
                         <td className="py-2.5 px-3 text-center">
@@ -992,35 +992,35 @@ export default function LaboratoryInventory({
         {/* VIEW 4: TRANSACTION HISTORY                                               */}
         {/* ========================================================================= */}
         {activeTab === "transactions" && (
-          <div className="bg-white border border-gray-200 rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-gray-200 bg-slate-50 flex items-center justify-between">
+          <div className="bg-white border border-[#DCE4EC] rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-[#DCE4EC] bg-slate-50 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-gray-900">
+                <h3 className="text-sm font-bold text-[#172B3A]">
                   Laboratory Stock Movement &amp; Audit Trail
                 </h3>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="text-xs text-[#64748B] mt-0.5">
                   Complete ledger of all receipts, issues, adjustments, returns, and write-offs.
                 </p>
               </div>
-              <span className="text-xs font-mono text-gray-600">
+              <span className="text-xs font-mono text-[#64748B]">
                 Total Transactions: {transactions.length}
               </span>
             </div>
 
             <div className="flex-1 overflow-x-auto overflow-y-auto min-h-[360px]">
               {transactions.length === 0 ? (
-                <div className="py-20 text-center text-gray-500">
+                <div className="py-20 text-center text-[#64748B]">
                   <div className="text-3xl mb-2">📋</div>
                   <h3 className="text-sm font-bold text-gray-800">
                     No inventory transactions recorded.
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-[#64748B] mt-1">
                     Every stock movement will be automatically logged here with user and timestamp.
                   </p>
                 </div>
               ) : (
                 <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-gray-200 sticky top-0 z-10">
+                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-[#DCE4EC] sticky top-0 z-10">
                     <tr>
                       <th className="py-2.5 px-3">Date &amp; Time</th>
                       <th className="py-2.5 px-3">Tx ID</th>
@@ -1048,14 +1048,14 @@ export default function LaboratoryInventory({
 
                       return (
                         <tr key={tx.id} className="hover:bg-slate-50">
-                          <td className="py-2.5 px-3 text-gray-600 font-sans text-[11px]">
+                          <td className="py-2.5 px-3 text-[#64748B] font-sans text-[11px]">
                             {new Date(tx.date).toLocaleString()}
                           </td>
-                          <td className="py-2.5 px-3 text-gray-500">{tx.id}</td>
-                          <td className="py-2.5 px-3 text-gray-900 font-semibold font-sans">
+                          <td className="py-2.5 px-3 text-[#64748B]">{tx.id}</td>
+                          <td className="py-2.5 px-3 text-[#172B3A] font-semibold font-sans">
                             {tx.itemName}
                           </td>
-                          <td className="py-2.5 px-3 text-gray-600">{tx.batchNumber}</td>
+                          <td className="py-2.5 px-3 text-[#64748B]">{tx.batchNumber}</td>
                           <td className="py-2.5 px-3 text-center">
                             <span
                               className={`px-2 py-0.5 text-[10px] rounded-none border font-semibold ${typeBadge}`}
@@ -1063,14 +1063,14 @@ export default function LaboratoryInventory({
                               {tx.type}
                             </span>
                           </td>
-                          <td className="py-2.5 px-3 text-right font-bold text-gray-900">
+                          <td className="py-2.5 px-3 text-right font-bold text-[#172B3A]">
                             {tx.quantity}
                           </td>
-                          <td className="py-2.5 px-3 text-right text-gray-600">
+                          <td className="py-2.5 px-3 text-right text-[#64748B]">
                             {tx.previousQuantity} → {tx.newQuantity}
                           </td>
                           <td className="py-2.5 px-3 text-gray-700 font-sans">{tx.user}</td>
-                          <td className="py-2.5 px-3 text-gray-500 font-sans text-[11px]">
+                          <td className="py-2.5 px-3 text-[#64748B] font-sans text-[11px]">
                             {tx.remarks || "—"}
                           </td>
                         </tr>
@@ -1087,13 +1087,13 @@ export default function LaboratoryInventory({
         {/* VIEW 5: SUPPLIERS MASTER                                                  */}
         {/* ========================================================================= */}
         {activeTab === "suppliers" && (
-          <div className="bg-white border border-gray-200 rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-gray-200 bg-slate-50 flex items-center justify-between">
+          <div className="bg-white border border-[#DCE4EC] rounded-none shadow-2xs flex-1 flex flex-col overflow-hidden">
+            <div className="p-4 border-b border-[#DCE4EC] bg-slate-50 flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-gray-900">
+                <h3 className="text-sm font-bold text-[#172B3A]">
                   Approved Diagnostic Vendors &amp; Reagent Suppliers
                 </h3>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <p className="text-xs text-[#64748B] mt-0.5">
                   Manufacturers, authorized distributors, and logistics contacts.
                 </p>
               </div>
@@ -1107,12 +1107,12 @@ export default function LaboratoryInventory({
 
             <div className="flex-1 overflow-x-auto overflow-y-auto min-h-[360px]">
               {suppliers.length === 0 ? (
-                <div className="py-20 text-center text-gray-500">
+                <div className="py-20 text-center text-[#64748B]">
                   <div className="text-3xl mb-2">🏢</div>
                   <h3 className="text-sm font-bold text-gray-800">
                     No supplier records available.
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-[#64748B] mt-1">
                     Suppliers are automatically tracked as stock items are added or can be registered
                     manually.
                   </p>
@@ -1125,7 +1125,7 @@ export default function LaboratoryInventory({
                 </div>
               ) : (
                 <table className="w-full text-left text-xs border-collapse">
-                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-gray-200">
+                  <thead className="bg-slate-100 text-gray-700 text-[11px] uppercase font-bold tracking-wider border-b border-[#DCE4EC]">
                     <tr>
                       <th className="py-2.5 px-4">Supplier Name</th>
                       <th className="py-2.5 px-3">Vendor Code</th>
@@ -1139,16 +1139,16 @@ export default function LaboratoryInventory({
                   <tbody className="divide-y divide-gray-200">
                     {suppliers.map((s) => (
                       <tr key={s.id} className="hover:bg-slate-50">
-                        <td className="py-2.5 px-4 font-semibold text-gray-900">{s.name}</td>
-                        <td className="py-2.5 px-3 font-mono text-gray-600">{s.code}</td>
+                        <td className="py-2.5 px-4 font-semibold text-[#172B3A]">{s.name}</td>
+                        <td className="py-2.5 px-3 font-mono text-[#64748B]">{s.code}</td>
                         <td className="py-2.5 px-4 text-gray-700">{s.contact}</td>
                         <td className="py-2.5 px-4 text-gray-700">{s.email}</td>
-                        <td className="py-2.5 px-4 text-gray-600">
+                        <td className="py-2.5 px-4 text-[#64748B]">
                           {s.itemsSupplied && s.itemsSupplied.length > 0
                             ? s.itemsSupplied.join(", ")
                             : "General Consumables"}
                         </td>
-                        <td className="py-2.5 px-3 font-mono text-gray-600">
+                        <td className="py-2.5 px-3 font-mono text-[#64748B]">
                           {s.lastSupplyDate || "—"}
                         </td>
                         <td className="py-2.5 px-3 text-center">
@@ -1171,7 +1171,7 @@ export default function LaboratoryInventory({
       {/* ========================================================================= */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-300 shadow-2xl w-full max-w-xl rounded-none flex flex-col max-h-[90vh] overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] shadow-2xl w-full max-w-xl rounded-none flex flex-col max-h-[90vh] overflow-hidden">
             <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between border-b border-gray-700">
               <h3 className="text-sm font-bold tracking-tight">
                 Add Laboratory Stock / Receive Reagent
@@ -1196,7 +1196,7 @@ export default function LaboratoryInventory({
                     placeholder="e.g. CBC Diluent / Hematology Reagent Pack"
                     value={newItemForm.name}
                     onChange={(e) => setNewItemForm({ ...newItemForm, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1212,7 +1212,7 @@ export default function LaboratoryInventory({
                         category: e.target.value as LabInventoryCategory,
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs bg-white"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs bg-white"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c} value={c}>
@@ -1231,7 +1231,7 @@ export default function LaboratoryInventory({
                     placeholder="e.g. REAG-CBC-01"
                     value={newItemForm.itemCode}
                     onChange={(e) => setNewItemForm({ ...newItemForm, itemCode: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1247,7 +1247,7 @@ export default function LaboratoryInventory({
                     onChange={(e) =>
                       setNewItemForm({ ...newItemForm, batchNumber: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1260,7 +1260,7 @@ export default function LaboratoryInventory({
                     required
                     value={newItemForm.expiryDate}
                     onChange={(e) => setNewItemForm({ ...newItemForm, expiryDate: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1276,7 +1276,7 @@ export default function LaboratoryInventory({
                     onChange={(e) =>
                       setNewItemForm({ ...newItemForm, quantity: Number(e.target.value) })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1287,7 +1287,7 @@ export default function LaboratoryInventory({
                   <select
                     value={newItemForm.unit}
                     onChange={(e) => setNewItemForm({ ...newItemForm, unit: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs bg-white"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs bg-white"
                   >
                     {UNITS.map((u) => (
                       <option key={u} value={u}>
@@ -1308,7 +1308,7 @@ export default function LaboratoryInventory({
                     onChange={(e) =>
                       setNewItemForm({ ...newItemForm, minimumStock: Number(e.target.value) })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1321,7 +1321,7 @@ export default function LaboratoryInventory({
                     placeholder="e.g. Roche Diagnostics / Transasia"
                     value={newItemForm.supplier}
                     onChange={(e) => setNewItemForm({ ...newItemForm, supplier: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
 
@@ -1336,16 +1336,16 @@ export default function LaboratoryInventory({
                     onChange={(e) =>
                       setNewItemForm({ ...newItemForm, storageLocation: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                    className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                   />
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-gray-200 flex items-center justify-end gap-2.5">
+              <div className="pt-3 border-t border-[#DCE4EC] flex items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-none cursor-pointer"
+                  className="px-4 py-2 border border-[#DCE4EC] text-gray-700 hover:bg-gray-100 rounded-none cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1366,7 +1366,7 @@ export default function LaboratoryInventory({
       {/* ========================================================================= */}
       {showIssueModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-300 shadow-2xl w-full max-w-md rounded-none overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] shadow-2xl w-full max-w-md rounded-none overflow-hidden">
             <div className="px-5 py-3.5 bg-blue-900 text-white flex items-center justify-between">
               <h3 className="text-sm font-bold">Issue Stock to Bench</h3>
               <button
@@ -1377,11 +1377,11 @@ export default function LaboratoryInventory({
               </button>
             </div>
             <form onSubmit={handleIssueStock} className="p-5 space-y-3.5 text-xs">
-              <div className="bg-slate-50 p-3 border border-gray-200">
-                <div className="font-bold text-gray-900">{showIssueModal.name}</div>
-                <div className="text-[11px] text-gray-500 mt-0.5">
+              <div className="bg-slate-50 p-3 border border-[#DCE4EC]">
+                <div className="font-bold text-[#172B3A]">{showIssueModal.name}</div>
+                <div className="text-[11px] text-[#64748B] mt-0.5">
                   Batch: {showIssueModal.batchNumber} · Available:{" "}
-                  <strong className="text-gray-900">
+                  <strong className="text-[#172B3A]">
                     {showIssueModal.quantity} {showIssueModal.unit}
                   </strong>
                 </div>
@@ -1398,7 +1398,7 @@ export default function LaboratoryInventory({
                   required
                   value={issueForm.quantity}
                   onChange={(e) => setIssueForm({ ...issueForm, quantity: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1409,7 +1409,7 @@ export default function LaboratoryInventory({
                 <select
                   value={issueForm.bench}
                   onChange={(e) => setIssueForm({ ...issueForm, bench: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs bg-white"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs bg-white"
                 >
                   <option value="Hematology Bench">Hematology Bench</option>
                   <option value="Biochemistry Analyzer">Biochemistry Analyzer</option>
@@ -1429,15 +1429,15 @@ export default function LaboratoryInventory({
                   type="text"
                   value={issueForm.remarks}
                   onChange={(e) => setIssueForm({ ...issueForm, remarks: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="pt-3 border-t border-gray-200 flex items-center justify-end gap-2">
+              <div className="pt-3 border-t border-[#DCE4EC] flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowIssueModal(null)}
-                  className="px-3.5 py-1.5 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-none"
+                  className="px-3.5 py-1.5 border border-[#DCE4EC] text-gray-700 hover:bg-gray-100 rounded-none"
                 >
                   Cancel
                 </button>
@@ -1458,7 +1458,7 @@ export default function LaboratoryInventory({
       {/* ========================================================================= */}
       {showAdjustModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-300 shadow-2xl w-full max-w-md rounded-none overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] shadow-2xl w-full max-w-md rounded-none overflow-hidden">
             <div className="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
               <h3 className="text-sm font-bold">Physical Count Adjustment</h3>
               <button
@@ -1469,11 +1469,11 @@ export default function LaboratoryInventory({
               </button>
             </div>
             <form onSubmit={handleAdjustStock} className="p-5 space-y-3.5 text-xs">
-              <div className="bg-slate-50 p-3 border border-gray-200">
-                <div className="font-bold text-gray-900">{showAdjustModal.name}</div>
-                <div className="text-[11px] text-gray-500 mt-0.5">
+              <div className="bg-slate-50 p-3 border border-[#DCE4EC]">
+                <div className="font-bold text-[#172B3A]">{showAdjustModal.name}</div>
+                <div className="text-[11px] text-[#64748B] mt-0.5">
                   Current System Quantity:{" "}
-                  <strong className="text-gray-900">
+                  <strong className="text-[#172B3A]">
                     {showAdjustModal.quantity} {showAdjustModal.unit}
                   </strong>
                 </div>
@@ -1491,7 +1491,7 @@ export default function LaboratoryInventory({
                   onChange={(e) =>
                     setAdjustForm({ ...adjustForm, newQuantity: Number(e.target.value) })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1504,15 +1504,15 @@ export default function LaboratoryInventory({
                   required
                   value={adjustForm.reason}
                   onChange={(e) => setAdjustForm({ ...adjustForm, reason: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="pt-3 border-t border-gray-200 flex items-center justify-end gap-2">
+              <div className="pt-3 border-t border-[#DCE4EC] flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowAdjustModal(null)}
-                  className="px-3.5 py-1.5 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-none"
+                  className="px-3.5 py-1.5 border border-[#DCE4EC] text-gray-700 hover:bg-gray-100 rounded-none"
                 >
                   Cancel
                 </button>
@@ -1533,7 +1533,7 @@ export default function LaboratoryInventory({
       {/* ========================================================================= */}
       {showReturnModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-300 shadow-2xl w-full max-w-md rounded-none overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] shadow-2xl w-full max-w-md rounded-none overflow-hidden">
             <div className="px-5 py-3.5 bg-amber-900 text-white flex items-center justify-between">
               <h3 className="text-sm font-bold">Return Stock to Supplier</h3>
               <button
@@ -1545,8 +1545,8 @@ export default function LaboratoryInventory({
             </div>
             <form onSubmit={handleReturnStock} className="p-5 space-y-3.5 text-xs">
               <div className="bg-amber-50/50 p-3 border border-amber-200">
-                <div className="font-bold text-gray-900">{showReturnModal.name}</div>
-                <div className="text-[11px] text-gray-600 mt-0.5">
+                <div className="font-bold text-[#172B3A]">{showReturnModal.name}</div>
+                <div className="text-[11px] text-[#64748B] mt-0.5">
                   Vendor: {showReturnModal.supplier} · Available: {showReturnModal.quantity}{" "}
                   {showReturnModal.unit}
                 </div>
@@ -1565,7 +1565,7 @@ export default function LaboratoryInventory({
                   onChange={(e) =>
                     setReturnForm({ ...returnForm, quantity: Number(e.target.value) })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1578,15 +1578,15 @@ export default function LaboratoryInventory({
                   required
                   value={returnForm.remarks}
                   onChange={(e) => setReturnForm({ ...returnForm, remarks: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="pt-3 border-t border-gray-200 flex items-center justify-end gap-2">
+              <div className="pt-3 border-t border-[#DCE4EC] flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowReturnModal(null)}
-                  className="px-3.5 py-1.5 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-none"
+                  className="px-3.5 py-1.5 border border-[#DCE4EC] text-gray-700 hover:bg-gray-100 rounded-none"
                 >
                   Cancel
                 </button>
@@ -1607,7 +1607,7 @@ export default function LaboratoryInventory({
       {/* ========================================================================= */}
       {showDamageModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-300 shadow-2xl w-full max-w-md rounded-none overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] shadow-2xl w-full max-w-md rounded-none overflow-hidden">
             <div className="px-5 py-3.5 bg-red-900 text-white flex items-center justify-between">
               <h3 className="text-sm font-bold">Mark Damaged Consumable</h3>
               <button
@@ -1619,8 +1619,8 @@ export default function LaboratoryInventory({
             </div>
             <form onSubmit={handleMarkDamaged} className="p-5 space-y-3.5 text-xs">
               <div className="bg-red-50/50 p-3 border border-red-200">
-                <div className="font-bold text-gray-900">{showDamageModal.name}</div>
-                <div className="text-[11px] text-gray-600 mt-0.5">
+                <div className="font-bold text-[#172B3A]">{showDamageModal.name}</div>
+                <div className="text-[11px] text-[#64748B] mt-0.5">
                   Batch: {showDamageModal.batchNumber} · Available: {showDamageModal.quantity}{" "}
                   {showDamageModal.unit}
                 </div>
@@ -1639,7 +1639,7 @@ export default function LaboratoryInventory({
                   onChange={(e) =>
                     setDamageForm({ ...damageForm, quantity: Number(e.target.value) })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1652,15 +1652,15 @@ export default function LaboratoryInventory({
                   required
                   value={damageForm.remarks}
                   onChange={(e) => setDamageForm({ ...damageForm, remarks: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="pt-3 border-t border-gray-200 flex items-center justify-end gap-2">
+              <div className="pt-3 border-t border-[#DCE4EC] flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowDamageModal(null)}
-                  className="px-3.5 py-1.5 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-none"
+                  className="px-3.5 py-1.5 border border-[#DCE4EC] text-gray-700 hover:bg-gray-100 rounded-none"
                 >
                   Cancel
                 </button>
@@ -1681,7 +1681,7 @@ export default function LaboratoryInventory({
       {/* ========================================================================= */}
       {showSupplierModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white border border-gray-300 shadow-2xl w-full max-w-md rounded-none overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] shadow-2xl w-full max-w-md rounded-none overflow-hidden">
             <div className="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between">
               <h3 className="text-sm font-bold">Register Diagnostic Vendor</h3>
               <button
@@ -1702,7 +1702,7 @@ export default function LaboratoryInventory({
                   placeholder="e.g. Sysmex India / Beckman Coulter"
                   value={supplierForm.name}
                   onChange={(e) => setSupplierForm({ ...supplierForm, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1715,7 +1715,7 @@ export default function LaboratoryInventory({
                   placeholder="e.g. SUP-SYS"
                   value={supplierForm.code}
                   onChange={(e) => setSupplierForm({ ...supplierForm, code: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1728,7 +1728,7 @@ export default function LaboratoryInventory({
                   placeholder="e.g. +91 98200 11223"
                   value={supplierForm.contact}
                   onChange={(e) => setSupplierForm({ ...supplierForm, contact: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
@@ -1741,15 +1741,15 @@ export default function LaboratoryInventory({
                   placeholder="e.g. orders@diagnosticvendor.com"
                   value={supplierForm.email}
                   onChange={(e) => setSupplierForm({ ...supplierForm, email: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-none focus:outline-none focus:border-blue-600 text-xs"
+                  className="w-full px-3 py-2 border border-[#DCE4EC] rounded-none focus:outline-none focus:border-blue-600 text-xs"
                 />
               </div>
 
-              <div className="pt-3 border-t border-gray-200 flex items-center justify-end gap-2">
+              <div className="pt-3 border-t border-[#DCE4EC] flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowSupplierModal(false)}
-                  className="px-3.5 py-1.5 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-none"
+                  className="px-3.5 py-1.5 border border-[#DCE4EC] text-gray-700 hover:bg-gray-100 rounded-none"
                 >
                   Cancel
                 </button>

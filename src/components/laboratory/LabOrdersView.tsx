@@ -185,17 +185,17 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
         <div className="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
           {[
             { id: "All", label: `All Orders (${orders.length})` },
-            { id: "Pending Billing", label: `💳 Awaiting Billing (${tabCounts.pendingBilling})` },
-            { id: "Paid", label: `💉 Ready for Draw (${tabCounts.readyForDraw})` },
-            { id: "Processing", label: `🔬 In Testing (${tabCounts.inTesting})` },
-            { id: "Completed", label: `✅ Released (${tabCounts.completed})` },
+            { id: "Pending Billing", label: `Awaiting Billing (${tabCounts.pendingBilling})` },
+            { id: "Paid", label: `Ready for Draw (${tabCounts.readyForDraw})` },
+            { id: "Processing", label: `In Testing (${tabCounts.inTesting})` },
+            { id: "Completed", label: `Released (${tabCounts.completed})` },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setSelectedStatusTab(tab.id)}
               className={`px-3 py-1.5 text-xs font-bold rounded-lg transition cursor-pointer ${
                 selectedStatusTab === tab.id
-                  ? "bg-white text-[#7552B8] shadow-2xs"
+                  ? "bg-white text-[#167D8D] shadow-2xs"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
@@ -213,13 +213,13 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
               placeholder="Filter orders by ID, UMR, test..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#7552B8] w-64 shadow-2xs"
+              className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#167D8D] w-64 shadow-2xs"
             />
           </div>
 
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#7552B8] hover:bg-[#6240a3] text-white text-xs font-bold rounded-xl transition shadow-2xs cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#167D8D] hover:bg-[#136674] text-white text-xs font-bold rounded-xl transition shadow-2xs cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>New Lab Order</span>
@@ -228,11 +228,11 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
       </div>
 
       {/* ── ORDERS TABLE ─────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-[#E2E8F0] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-[#DCE4EC] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                 <th className="py-3 px-4">Order Ref</th>
                 <th className="py-3 px-4">Patient Demographics</th>
                 <th className="py-3 px-4">Tests Included</th>
@@ -348,7 +348,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                             <button
                               type="button"
                               onClick={() => onCollectSample(order)}
-                              className="px-2.5 py-1 bg-purple-50 hover:bg-purple-100 text-[#7552B8] border border-purple-200 text-xs font-bold rounded-lg transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                              className="px-2.5 py-1 bg-purple-50 hover:bg-purple-100 text-[#167D8D] border border-purple-200 text-xs font-bold rounded-lg transition cursor-pointer flex items-center gap-1 shadow-2xs"
                               title="Go to Phlebotomy / Sample Collection"
                             >
                               <span>💉 Draw Sample</span>
@@ -394,7 +394,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
             {/* Modal Header */}
             <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-purple-100 text-[#7552B8] rounded-xl">
+                <div className="p-2 bg-purple-100 text-[#167D8D] rounded-xl">
                   <Plus className="w-4 h-4" />
                 </div>
                 <div>
@@ -452,7 +452,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                       placeholder="Type patient name, UMR, or phone number..."
                       value={patientSearch}
                       onChange={(e) => setPatientSearch(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#7552B8]"
+                      className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#167D8D]"
                     />
                     {patientMatches.length > 0 && (
                       <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg z-20 overflow-hidden divide-y divide-slate-100">
@@ -537,7 +537,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                           priority === p
                             ? p === "STAT"
                               ? "bg-rose-600 text-white border-rose-600 shadow-2xs"
-                              : "bg-[#7552B8] text-white border-[#7552B8] shadow-2xs"
+                              : "bg-[#167D8D] text-white border-[#7552B8] shadow-2xs"
                             : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
                         }`}
                       >
@@ -553,7 +553,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                       type="checkbox"
                       checked={fastingRequired}
                       onChange={(e) => setFastingRequired(e.target.checked)}
-                      className="w-4 h-4 rounded text-[#7552B8] focus:ring-[#7552B8]"
+                      className="w-4 h-4 rounded text-[#167D8D] focus:ring-[#167D8D]"
                     />
                     <span>10-12 Hours Fasting Required</span>
                   </label>
@@ -593,7 +593,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                         }}
                         className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 cursor-pointer ${
                           isSelected
-                            ? "bg-[#7552B8] text-white shadow-2xs"
+                            ? "bg-[#167D8D] text-white shadow-2xs"
                             : "bg-white text-slate-700 border border-slate-200 hover:border-purple-300"
                         }`}
                       >
@@ -610,7 +610,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                 <div className="p-3 bg-purple-50/50 border border-purple-200 rounded-xl text-xs space-y-2">
                   <div className="flex justify-between items-center font-bold text-slate-900">
                     <span>Selected Tests ({selectedTests.length})</span>
-                    <span className="text-[#7552B8] font-mono text-sm">Total Tariff: ₹{orderTotal}</span>
+                    <span className="text-[#167D8D] font-mono text-sm">Total Tariff: ₹{orderTotal}</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
                     {selectedTests.map((t) => (
@@ -655,7 +655,7 @@ export default function LabOrdersView({ onOpenReport, onOpenBench, onCollectSamp
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl text-xs font-bold bg-[#7552B8] hover:bg-[#6240a3] text-white transition shadow-2xs cursor-pointer"
+                  className="px-5 py-2 rounded-xl text-xs font-bold bg-[#167D8D] hover:bg-[#136674] text-white transition shadow-2xs cursor-pointer"
                 >
                   Confirm & Route to Billing / Draw
                 </button>

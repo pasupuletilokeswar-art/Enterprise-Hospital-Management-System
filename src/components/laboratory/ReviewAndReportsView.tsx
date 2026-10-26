@@ -15,7 +15,7 @@ export default function ReviewAndReportsView({
   return (
     <div className="space-y-4">
       {/* ── UNIFIED REVIEW & REPORTS HEADER ───────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-3 shadow-2xs">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl p-3 shadow-2xs">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-lg border border-slate-200">
             <button

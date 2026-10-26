@@ -33,22 +33,22 @@ export default function LabWorkbenchView({
   const handleResultEntryComplete = () => {
     setActiveTab("review")
     if (onCompleteToReports) {
-      // Notification callback if needed
+      // Notification if needed
     }
   }
 
   return (
     <div className="space-y-4">
       {/* ── UNIFIED WORKBENCH HEADER & WORKSPACE SWITCHER ─────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-3 shadow-2xs">
+      <div className="bg-white border border-[#DCE4EC] rounded-2xl p-2.5 shadow-2xs">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-lg border border-slate-200">
+          <div className="flex items-center gap-1.5 p-1 bg-[#F4F7FA] rounded-xl border border-[#DCE4EC]">
             <button
               onClick={() => setActiveTab("worklists")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-bold transition cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
                 activeTab === "worklists"
-                  ? "bg-[#7552B8] text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/70"
+                  ? "bg-[#167D8D] text-white shadow-xs"
+                  : "text-[#64748B] hover:text-[#172B3A] hover:bg-slate-200/60"
               }`}
             >
               <Microscope className="w-4 h-4" />
@@ -57,16 +57,16 @@ export default function LabWorkbenchView({
 
             <button
               onClick={() => setActiveTab("result_entry")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-bold transition cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
                 activeTab === "result_entry"
-                  ? "bg-[#7552B8] text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/70"
+                  ? "bg-[#167D8D] text-white shadow-xs"
+                  : "text-[#64748B] hover:text-[#172B3A] hover:bg-slate-200/60"
               }`}
             >
               <FileEdit className="w-4 h-4" />
               <span>Structured Result Entry</span>
               {selectedOrder && (
-                <span className="ml-1 px-1.5 py-0.5 rounded text-[10px] bg-purple-200 text-purple-900 font-mono">
+                <span className="ml-1 px-1.5 py-0.5 rounded text-[10px] bg-white/20 text-white font-mono">
                   {selectedOrder.id}
                 </span>
               )}
@@ -74,10 +74,10 @@ export default function LabWorkbenchView({
 
             <button
               onClick={() => setActiveTab("review")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-bold transition cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
                 activeTab === "review"
-                  ? "bg-[#7552B8] text-white shadow-xs"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/70"
+                  ? "bg-[#167D8D] text-white shadow-xs"
+                  : "text-[#64748B] hover:text-[#172B3A] hover:bg-slate-200/60"
               }`}
             >
               <FileCheck className="w-4 h-4" />
@@ -85,9 +85,9 @@ export default function LabWorkbenchView({
             </button>
           </div>
 
-          <div className="text-[11px] text-slate-500 hidden sm:flex items-center gap-2">
-            <span className="font-semibold text-slate-700">Lab Workbench:</span>
-            <span>Batch processing, result entry & critical flagging, and clinical pathologist sign-off</span>
+          <div className="text-[11px] text-[#64748B] hidden sm:flex items-center gap-2 pr-2">
+            <span className="font-bold text-[#14243A]">Analytical Workbench:</span>
+            <span>Batch processing, result entry & flags, and clinical pathologist sign-off</span>
           </div>
         </div>
       </div>

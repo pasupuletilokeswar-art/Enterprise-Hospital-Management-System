@@ -70,12 +70,12 @@ export default function QualityControlView() {
   return (
     <div className="space-y-4">
       {/* ── SUB-TABS: QC CHARTS VS OPERATIONAL ANALYTICS ───────────────────── */}
-      <div className="flex border-b border-[#E2E8F0] overflow-x-auto bg-white p-1 rounded-xl shadow-2xs gap-1">
+      <div className="flex border-b border-[#DCE4EC] overflow-x-auto bg-white p-1 rounded-xl shadow-2xs gap-1">
         <button
           onClick={() => setActiveTab("qc_charts")}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
             activeTab === "qc_charts"
-              ? "bg-[#7552B8] text-white shadow-2xs"
+              ? "bg-[#167D8D] text-white shadow-2xs"
               : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           }`}
         >
@@ -87,7 +87,7 @@ export default function QualityControlView() {
           onClick={() => setActiveTab("analytics")}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
             activeTab === "analytics"
-              ? "bg-[#7552B8] text-white shadow-2xs"
+              ? "bg-[#167D8D] text-white shadow-2xs"
               : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           }`}
         >
@@ -99,7 +99,7 @@ export default function QualityControlView() {
           onClick={() => setActiveTab("tat_monitor")}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
             activeTab === "tat_monitor"
-              ? "bg-[#7552B8] text-white shadow-2xs"
+              ? "bg-[#167D8D] text-white shadow-2xs"
               : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           }`}
         >
@@ -115,7 +115,7 @@ export default function QualityControlView() {
       ) : (
         <div className="space-y-4">
           {/* ── TOP CONTROLS ────────────────────────────────────────────────── */}
-          <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div>
                 <label className="block text-[10.5px] font-bold text-slate-500 uppercase">Selected Analyte</label>
@@ -139,7 +139,7 @@ export default function QualityControlView() {
 
             <button
               onClick={() => setIsAddQcModalOpen(true)}
-              className="px-4 py-2 bg-[#7552B8] hover:bg-[#6240a3] text-white text-xs font-bold rounded-xl transition shadow-2xs flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 bg-[#167D8D] hover:bg-[#136674] text-white text-xs font-bold rounded-xl transition shadow-2xs flex items-center gap-1.5 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Log Daily QC Run</span>
@@ -147,7 +147,7 @@ export default function QualityControlView() {
           </div>
 
           {/* ── LEVEY-JENNINGS VISUAL CHART ─────────────────────────────────── */}
-          <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-2xs space-y-4">
+          <div className="bg-white border border-[#DCE4EC] rounded-xl p-5 shadow-2xs space-y-4">
             <div className="flex justify-between items-center border-b border-slate-100 pb-3">
               <div>
                 <h4 className="text-sm font-bold text-slate-900">Levey-Jennings Control Chart: {selectedAnalyte}</h4>
@@ -190,7 +190,7 @@ export default function QualityControlView() {
           </div>
 
           {/* ── QC AUDIT RUNS TABLE ─────────────────────────────────────────── */}
-          <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
+          <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
             <div className="p-3.5 border-b border-slate-100 bg-slate-50 font-bold text-xs text-slate-700">
               Recent Quality Control Inoculations & Calibrations
             </div>
@@ -313,7 +313,7 @@ export default function QualityControlView() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#7552B8] hover:bg-[#6240a3] text-white font-bold rounded-xl shadow-2xs"
+                  className="px-4 py-2 bg-[#167D8D] hover:bg-[#136674] text-white font-bold rounded-xl shadow-2xs"
                 >
                   Calculate z-Score & Save
                 </button>

@@ -117,7 +117,7 @@ export default function CriticalAlertsView() {
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Acknowledged Today</span>
             <CheckCircle2 className="w-4 h-4 text-teal-600" />
@@ -126,7 +126,7 @@ export default function CriticalAlertsView() {
           <div className="text-[10px] text-teal-600 font-semibold mt-0.5">Clinician readback logged</div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase">
             <span>Response SLA Target</span>
             <Clock className="w-4 h-4 text-purple-600" />
@@ -137,8 +137,8 @@ export default function CriticalAlertsView() {
       </div>
 
       {/* ── ALERTS TABLE ────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
-        <div className="p-4 border-b border-[#E2E8F0] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
+        <div className="p-4 border-b border-[#DCE4EC] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-rose-600" />
             <div>
@@ -156,7 +156,7 @@ export default function CriticalAlertsView() {
               placeholder="Search by patient, UMR, test..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl focus:outline-none w-64"
+              className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-xl focus:outline-none w-64"
             />
           </div>
         </div>
@@ -164,7 +164,7 @@ export default function CriticalAlertsView() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-[#E2E8F0] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-[#DCE4EC] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                 <th className="py-3 px-4">Alert ID & Time</th>
                 <th className="py-3 px-4">Patient Details</th>
                 <th className="py-3 px-4">Critical Test & Analyte</th>

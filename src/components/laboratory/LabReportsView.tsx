@@ -190,7 +190,7 @@ export default function LabReportsView() {
     <div className="space-y-4">
       {/* ── 1. OPERATIONAL REPORT KPI METRICS ───────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
             <span>Newly Approved Today</span>
             <Sparkles className="w-4 h-4 text-emerald-600" />
@@ -203,7 +203,7 @@ export default function LabReportsView() {
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
             <span>Historical Repository</span>
             <Archive className="w-4 h-4 text-purple-600" />
@@ -214,7 +214,7 @@ export default function LabReportsView() {
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
             <span>Preliminary / In-Flight</span>
             <Clock className="w-4 h-4 text-amber-600" />
@@ -225,7 +225,7 @@ export default function LabReportsView() {
           </div>
         </div>
 
-        <div className="bg-white border border-[#E2E8F0] rounded-xl p-3.5 shadow-2xs">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl p-3.5 shadow-2xs">
           <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider">
             <span>STAT Priority Reports</span>
             <Activity className="w-4 h-4 text-rose-600" />
@@ -238,12 +238,12 @@ export default function LabReportsView() {
       </div>
 
       {/* ── 2. SUB-MODULE TABS: CATEGORIZATION & SEPARATION ─────────────────── */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[#E2E8F0] pb-2">
+      <div className="flex flex-wrap items-center gap-2 border-b border-[#DCE4EC] pb-2">
         <button
           onClick={() => setActiveSubTab("recent_approved")}
           className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
             activeSubTab === "recent_approved"
-              ? "bg-[#0D9488] text-white shadow-xs"
+              ? "bg-[#167D8D] text-white shadow-xs"
               : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
@@ -251,7 +251,7 @@ export default function LabReportsView() {
           <span>Newly Approved Reports</span>
           <span
             className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
-              activeSubTab === "recent_approved" ? "bg-white text-[#0D9488]" : "bg-teal-100 text-[#0D9488]"
+              activeSubTab === "recent_approved" ? "bg-white text-[#167D8D]" : "bg-teal-100 text-[#167D8D]"
             }`}
           >
             {todayApprovedReports.length}
@@ -262,7 +262,7 @@ export default function LabReportsView() {
           onClick={() => setActiveSubTab("history")}
           className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition cursor-pointer ${
             activeSubTab === "history"
-              ? "bg-[#7552B8] text-white shadow-xs"
+              ? "bg-[#167D8D] text-white shadow-xs"
               : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
         >
@@ -270,7 +270,7 @@ export default function LabReportsView() {
           <span>Archived Reports History</span>
           <span
             className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
-              activeSubTab === "history" ? "bg-white text-[#7552B8]" : "bg-purple-100 text-[#7552B8]"
+              activeSubTab === "history" ? "bg-white text-[#167D8D]" : "bg-purple-100 text-[#167D8D]"
             }`}
           >
             {historyReports.length}
@@ -317,11 +317,11 @@ export default function LabReportsView() {
       </div>
 
       {/* ── 3. REPORTS REPOSITORY TABLE ─────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs overflow-hidden">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs overflow-hidden">
         {/* Table Toolbar */}
-        <div className="p-4 border-b border-[#E2E8F0] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
+        <div className="p-4 border-b border-[#DCE4EC] bg-slate-50/60 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-[#7552B8]" />
+            <FileText className="w-5 h-5 text-[#167D8D]" />
             <div>
               <h3 className="text-sm font-bold text-slate-900">
                 {activeSubTab === "recent_approved" && "Newly Approved Pathology Reports"}
@@ -351,7 +351,7 @@ export default function LabReportsView() {
                 placeholder="Search by order, patient, UMR..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#7552B8] w-56"
+                className="pl-8 pr-3 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#7552B8] w-56"
               />
             </div>
 
@@ -359,7 +359,7 @@ export default function LabReportsView() {
             <select
               value={selectedDeptFilter}
               onChange={(e) => setSelectedDeptFilter(e.target.value)}
-              className="px-2.5 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-lg text-slate-700 focus:outline-none"
+              className="px-2.5 py-1.5 text-xs bg-white border border-[#DCE4EC] rounded-lg text-slate-700 focus:outline-none"
             >
               <option value="All">All Departments</option>
               <option value="Hematology">Hematology</option>
@@ -371,7 +371,7 @@ export default function LabReportsView() {
 
             <button
               onClick={loadData}
-              className="p-1.5 bg-white border border-[#E2E8F0] hover:bg-slate-100 rounded-lg text-slate-600 transition cursor-pointer"
+              className="p-1.5 bg-white border border-[#DCE4EC] hover:bg-slate-100 rounded-lg text-slate-600 transition cursor-pointer"
               title="Refresh Reports"
             >
               <RefreshCw className="w-3.5 h-3.5" />
@@ -383,7 +383,7 @@ export default function LabReportsView() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-[#E2E8F0] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+              <tr className="bg-slate-50 border-b border-[#DCE4EC] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                 <th className="py-3 px-4">Report / Order Ref</th>
                 <th className="py-3 px-4">Patient Demographics</th>
                 <th className="py-3 px-4">Diagnostic Panels Completed</th>
@@ -497,7 +497,7 @@ export default function LabReportsView() {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => setActiveReportOrder(order)}
-                            className="px-3 py-1 bg-slate-100 hover:bg-[#7552B8] hover:text-white text-slate-700 text-xs font-bold rounded-lg transition cursor-pointer flex items-center gap-1"
+                            className="px-3 py-1 bg-slate-100 hover:bg-[#167D8D] hover:text-white text-slate-700 text-xs font-bold rounded-lg transition cursor-pointer flex items-center gap-1"
                           >
                             <Eye className="w-3 h-3" />
                             <span>Preview</span>
@@ -520,7 +520,7 @@ export default function LabReportsView() {
         </div>
 
         {/* Footer info */}
-        <div className="p-3 border-t border-[#E2E8F0] bg-slate-50/70 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+        <div className="p-3 border-t border-[#DCE4EC] bg-slate-50/70 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
           <span>
             Displaying <strong className="text-slate-800">{displayedReports.length}</strong> reports in{" "}
             <strong className="text-slate-800">

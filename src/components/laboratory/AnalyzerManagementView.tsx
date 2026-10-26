@@ -66,7 +66,7 @@ export default function AnalyzerManagementView() {
       )}
 
       {/* ── TOP BANNER ──────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="p-2 bg-purple-100 text-[#7552B8] rounded-xl">
             <Cpu className="w-5 h-5" />
@@ -104,7 +104,7 @@ export default function AnalyzerManagementView() {
               className={`p-4 bg-white rounded-xl border transition-all cursor-pointer relative flex flex-col justify-between ${
                 isSelected
                   ? "border-[#7552B8] shadow-md ring-1 ring-[#7552B8]"
-                  : "border-[#E2E8F0] hover:border-slate-300"
+                  : "border-[#DCE4EC] hover:border-slate-300"
               }`}
             >
               <div>
@@ -154,7 +154,7 @@ export default function AnalyzerManagementView() {
       {selectedAnalyzer && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Left Panel: Instrument Details & Code Mappings */}
-          <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-2xs space-y-4">
+          <div className="bg-white border border-[#DCE4EC] rounded-xl p-5 shadow-2xs space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="text-sm font-bold text-slate-900">{selectedAnalyzer.name} Configuration</h4>

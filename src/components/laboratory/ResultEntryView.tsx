@@ -215,9 +215,9 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
       )}
 
       {/* ── TOP ORDER SELECTOR & WORKSPACE HEADER ───────────────────────────── */}
-      <div className="bg-white border border-[#E2E8F0] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white border border-[#DCE4EC] rounded-xl p-4 shadow-2xs flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 bg-purple-100 text-[#7552B8] rounded-xl">
+          <div className="p-2 bg-[#167D8D]/10 text-[#167D8D] rounded-xl">
             <FileEdit className="w-5 h-5" />
           </div>
           <div>
@@ -256,7 +256,7 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
               <select
                 value={selectedTestId}
                 onChange={(e) => setSelectedTestId(e.target.value)}
-                className="px-3 py-1.5 text-xs bg-purple-50 border border-purple-200 rounded-xl font-bold text-[#7552B8]"
+                className="px-3 py-1.5 text-xs bg-[#167D8D]/5 border border-[#167D8D]/30 rounded-xl font-bold text-[#167D8D]"
               >
                 {selectedOrder.tests.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -271,19 +271,19 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
 
       {/* ── RESULT ENTRY FORM ───────────────────────────────────────────────── */}
       {selectedOrder && selectedTest ? (
-        <div className="bg-white border border-[#E2E8F0] rounded-xl shadow-2xs p-5 space-y-5">
+        <div className="bg-white border border-[#DCE4EC] rounded-xl shadow-2xs p-5 space-y-5">
           {/* Patient Banner */}
           <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex flex-wrap items-center justify-between gap-3 text-xs">
             <div>
               <span className="font-bold text-slate-900 text-sm">{selectedOrder.patientName}</span>{" "}
-              <span className="font-mono text-purple-700 font-bold">({selectedOrder.umr})</span>
+              <span className="font-mono text-[#167D8D] font-bold">({selectedOrder.umr})</span>
               <div className="text-[11px] text-slate-500 mt-0.5">
                 {selectedOrder.age}y · {selectedOrder.sex} · Doctor: {selectedOrder.doctorName} ({selectedOrder.department})
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded bg-purple-100 text-purple-800 font-bold text-xs">
+              <span className="px-2.5 py-1 rounded bg-[#167D8D]/10 text-[#167D8D] font-bold text-xs">
                 {selectedTest.name}
               </span>
               <span
@@ -359,7 +359,7 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
                     type="button"
                     onClick={handleAutoFillNormalValues}
                     disabled={!isOrderPaid}
-                    className="px-2.5 py-1 bg-purple-50 hover:bg-purple-100 text-[#7552B8] border border-purple-200 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                    className="px-2.5 py-1 bg-[#167D8D]/5 hover:bg-[#167D8D]/10 text-[#167D8D] border border-[#167D8D]/30 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
                     title="Automatically fill normal baseline values for rapid entry"
                   >
                     <Sparkles className="w-3.5 h-3.5" />
@@ -667,7 +667,7 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
                 className={`px-5 py-2 rounded-xl text-xs font-bold transition shadow-2xs flex items-center gap-1.5 ${
                   !isOrderPaid
                     ? "bg-purple-300 text-white cursor-not-allowed opacity-60"
-                    : "bg-[#7552B8] hover:bg-[#6240a3] text-white cursor-pointer"
+                    : "bg-[#167D8D] hover:bg-[#136674] text-white cursor-pointer"
                 }`}
               >
                 <Save className="w-4 h-4" />
@@ -677,7 +677,7 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
           </div>
         </div>
       ) : (
-        <div className="p-12 text-center text-slate-400 text-xs bg-white border border-[#E2E8F0] rounded-xl">
+        <div className="p-12 text-center text-slate-400 text-xs bg-white border border-[#DCE4EC] rounded-xl">
           Please select an order and test from the dropdown above to enter observations.
         </div>
       )}
