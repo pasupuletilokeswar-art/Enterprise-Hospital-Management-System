@@ -26,9 +26,9 @@ interface LabDashboardViewProps {
 }
 
 export default function LabDashboardView({ onNavigate, onOpenOrder }: LabDashboardViewProps) {
-  const [orders, setOrders] = useState<LabOrder[]>([])
-  const [specimens, setSpecimens] = useState<SpecimenRecord[]>([])
-  const [criticalAlerts, setCriticalAlerts] = useState<CriticalAlertRecord[]>([])
+  const [orders, setOrders] = useState<LabOrder[]>(() => LabOrderDatabase.getOrders())
+  const [specimens, setSpecimens] = useState<SpecimenRecord[]>(() => LabLisService.getSpecimens())
+  const [criticalAlerts, setCriticalAlerts] = useState<CriticalAlertRecord[]>(() => LabLisService.getCriticalAlerts())
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedDept, setSelectedDept] = useState("All")
   const [selectedPriority, setSelectedPriority] = useState("All")

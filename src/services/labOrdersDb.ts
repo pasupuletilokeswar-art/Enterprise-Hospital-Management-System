@@ -195,13 +195,14 @@ export function priceForTest(testName: string): number {
 
 const listeners = new Set<() => void>()
 let channel: BroadcastChannel | null = null
+let cachedOrders: LabOrder[] | null = null
 
 function ensureChannel(): BroadcastChannel | null {
   if (typeof window === "undefined" || typeof BroadcastChannel === "undefined")
     return null
   if (!channel) {
     channel = new BroadcastChannel(CHANNEL_NAME)
-    channel.onmessage = () => listeners.forEach((fn) => fn())
+    channel.onmessage = () => { cachedOrders = null; listeners.forEach((fn) => fn()); }
   }
   return channel
 }
@@ -703,6 +704,7 @@ function getInitialDemoOrders(): LabOrder[] {
 
 function readOrders(): LabOrder[] {
   if (typeof window === "undefined") return []
+  if (cachedOrders) return cachedOrders
   try {
     const raw = window.localStorage.getItem(ORDERS_KEY)
     if (!raw) {
@@ -797,13 +799,15 @@ function readOrders(): LabOrder[] {
       } catch {}
     }
 
-    return sanitized.map(normalizeOrder)
+    cachedOrders = sanitized.map(normalizeOrder)
+    return cachedOrders
   } catch {
     return []
   }
 }
 
 function writeOrders(orders: LabOrder[]): void {
+  cachedOrders = orders
   if (typeof window === "undefined") return
   try {
     window.localStorage.setItem(ORDERS_KEY, JSON.stringify(orders))
@@ -836,6 +840,7 @@ export class LabOrderDatabase {
 
   static resetToCleanDemoData(): void {
     if (typeof window === "undefined") return
+    cachedOrders = null
     const initial = getInitialDemoOrders()
     window.localStorage.setItem(ORDERS_KEY, JSON.stringify(initial))
     try {

@@ -37,6 +37,13 @@ const STORAGE_KEY_CRITICAL_ALERTS = "hospai_lis_critical_alerts_v1"
 const STORAGE_KEY_QC_RECORDS = "hospai_lis_qc_records_v1"
 const STORAGE_KEY_SETTINGS = "hospai_lis_settings_v1"
 const LIS_UPDATE_EVENT = "hospai_lis_updated"
+let cachedSpecimens: SpecimenRecord[] | null = null
+let cachedCriticalAlerts: CriticalAlertRecord[] | null = null
+
+export function invalidateLisCache(): void {
+  cachedSpecimens = null
+  cachedCriticalAlerts = null
+}
 
 // ─── TYPE DEFINITIONS ────────────────────────────────────────────────────────
 
@@ -460,6 +467,7 @@ export class LabLisService {
    * Resolves or generates the specimens needed for an order based on tests ordered.
    */
   static getSpecimens(): SpecimenRecord[] {
+    if (cachedSpecimens) return cachedSpecimens
     const orders = LabOrderDatabase.getOrders()
     const stored = this.load<SpecimenRecord[]>(STORAGE_KEY_SPECIMENS, [])
     const specimenMap = new Map<string, SpecimenRecord>()
@@ -558,6 +566,7 @@ export class LabLisService {
     if (mutated) {
       this.save(STORAGE_KEY_SPECIMENS, list)
     }
+    cachedSpecimens = list
     return list
   }
 

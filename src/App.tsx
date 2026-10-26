@@ -1695,27 +1695,31 @@ export default function App() {
           : 0,
 
         laboratory: 0,
-        lab_orders_collection: LabOrderDatabase.getLabWorklist().filter(
-          (o) => o.billing.status === "Paid" && o.status === "Billed",
-        ).length,
-        lab_workbench: LabOrderDatabase.getLabWorklist().filter(
-          (o) => (o.status === "Sample Collected" || o.status === "In Progress"),
-        ).length,
-        lab_sample_collection: LabOrderDatabase.getLabWorklist().filter(
-          (o) => o.billing.status === "Paid" && o.status === "Billed",
-        ).length,
-        lab_processing: LabOrderDatabase.getLabWorklist().filter(
-          (o) => (o.status === "Sample Collected" || o.status === "In Progress"),
-        ).length,
-        lab_critical: LabOrderDatabase.getLabWorklist().filter((o) =>
-          o.tests.some(
-            (t) =>
-              t.flag === "Critical" ||
-              Object.values(t.results || {}).some((r) => r.flag === "Critical"),
-          ),
-        ).length,
-        lab_reports: 0,
-        lab_catalog: 0,
+        ...(() => {
+          const labWorklist = LabOrderDatabase.getLabWorklist()
+          const paidBilled = labWorklist.filter(
+            (o) => o.billing.status === "Paid" && o.status === "Billed",
+          ).length
+          const sampleOrInProg = labWorklist.filter(
+            (o) => o.status === "Sample Collected" || o.status === "In Progress",
+          ).length
+          const criticalCount = labWorklist.filter((o) =>
+            o.tests.some(
+              (t) =>
+                t.flag === "Critical" ||
+                Object.values(t.results || {}).some((r) => r.flag === "Critical"),
+            ),
+          ).length
+          return {
+            lab_orders_collection: paidBilled,
+            lab_workbench: sampleOrInProg,
+            lab_sample_collection: paidBilled,
+            lab_processing: sampleOrInProg,
+            lab_critical: criticalCount,
+            lab_reports: 0,
+            lab_catalog: 0,
+          }
+        })(),
         lab_inventory: LabInventoryDatabase.getItems().filter(
           (i) => i.status === "Low Stock" || i.status === "Expiring Soon" || i.status === "Expired"
         ).length,
@@ -2396,24 +2400,16 @@ export default function App() {
                         }
                         onClick={() => {
                           if (filteredChildren && filteredChildren.length > 0) {
-                            if (railCollapsed) {
-                              if (item.key === "intelligence") {
-                                setModule("intelligence")
-                              } else {
-                                setModule(filteredChildren[0].key)
-                              }
+                            setInsuranceCaseId(undefined)
+                            if (item.key === "intelligence") {
+                              setModule("intelligence")
                             } else {
-                              toggleExpand(item.key)
-
-                              if (!expanded.includes(item.key)) {
-                                setInsuranceCaseId(undefined)
-                                if (item.key === "intelligence") {
-                                  setModule("intelligence")
-                                } else {
-                                  setModule(filteredChildren[0].key)
-                                }
-                              }
+                              setModule(filteredChildren[0].key)
                             }
+                            setExpanded((prev) =>
+                              prev.includes(item.key) ? prev : [...prev, item.key],
+                            )
+                            closeMobileNav()
                           } else {
                             setInsuranceCaseId(undefined)
                             setModule(item.key)
@@ -2460,8 +2456,12 @@ export default function App() {
                             {filteredChildren &&
                               filteredChildren.length > 0 && (
                                 <span
-                                  className={`transition-transform duration-200 ml-1 ${isExpanded ? "rotate-90" : ""
+                                  className={`transition-transform duration-200 ml-1 p-0.5 hover:bg-white/10 rounded cursor-pointer ${isExpanded ? "rotate-90" : ""
                                     }`}
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    toggleExpand(item.key)
+                                  }}
                                 >
                                   <Icon.ChevronRight />
                                 </span>

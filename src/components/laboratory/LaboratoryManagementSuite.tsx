@@ -142,9 +142,9 @@ export default function LaboratoryManagementSuite({
   const [showGuide, setShowGuide] = useState(false)
 
   // Live data subscriptions for badges
-  const [orders, setOrders] = useState<LabOrder[]>([])
-  const [specimens, setSpecimens] = useState<SpecimenRecord[]>([])
-  const [criticalAlerts, setCriticalAlerts] = useState<CriticalAlertRecord[]>([])
+  const [orders, setOrders] = useState<LabOrder[]>(() => LabOrderDatabase.getOrders())
+  const [specimens, setSpecimens] = useState<SpecimenRecord[]>(() => LabLisService.getSpecimens())
+  const [criticalAlerts, setCriticalAlerts] = useState<CriticalAlertRecord[]>(() => LabLisService.getCriticalAlerts())
 
   const loadData = () => {
     setOrders(LabOrderDatabase.getOrders())
