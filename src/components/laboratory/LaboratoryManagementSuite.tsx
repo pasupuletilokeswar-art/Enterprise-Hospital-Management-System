@@ -314,9 +314,7 @@ export default function LaboratoryManagementSuite({
               <span>{showGuide ? "Hide Guide" : "How Lab Works"}</span>
             </button>
 
-            <div className="px-3 py-1.5 bg-purple-50/70 border border-purple-100 text-[#7552B8] rounded-xl text-xs font-semibold">
-              Duty: <span className="font-bold">{technician}</span>
-            </div>
+
           </div>
         </div>
 
