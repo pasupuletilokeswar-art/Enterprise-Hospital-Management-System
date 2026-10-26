@@ -62,39 +62,39 @@ const MODULE_HEADER_INFO: Record<
   { title: string; subtitle: string; badge?: string }
 > = {
   lab_dashboard: {
-    title: "Laboratory Command Center",
+    title: "Laboratory Dashboard",
     subtitle: "Real-time diagnostic workload, turnaround times, and pending specimen queues",
     badge: "Operational Overview",
   },
   lab_orders_collection: {
     title: "Lab Orders & Sample Collection",
-    subtitle: "Doctor order intake, billing clearance verification, vacuum tube selection, and barcode phlebotomy queue",
-    badge: "Order Intake & Phlebotomy",
+    subtitle: "Doctor order intake, billing verification, tube selection, and phlebotomy collection queue",
+    badge: "Orders & Phlebotomy",
   },
   lab_workbench: {
-    title: "Laboratory Workbench & Result Entry",
-    subtitle: "Department analytical bench queues, structured parameter entry with panic limit checks, and pathologist sign-off",
-    badge: "Analytical Testing",
+    title: "Laboratory Workbench",
+    subtitle: "Department analytical queues, structured result entry with panic limits, and pathologist review",
+    badge: "Testing & Review",
   },
   lab_reports: {
-    title: "Diagnostic Reports & Archive",
-    subtitle: "Official printable hospital pathology reports, release history, high-fidelity PDF printing, and EMR timeline",
-    badge: "Diagnostic Archive",
+    title: "Laboratory Diagnostic Reports",
+    subtitle: "Authorized printable reports, newly approved queue, release history, and patient EMR sync",
+    badge: "Diagnostic Reports",
   },
   lab_inventory: {
-    title: "Laboratory Consumables & Reagents",
+    title: "Lab Inventory & Consumables",
     subtitle: "Reagents, test kits, vacuum collection tubes, and consumable stock management",
-    badge: "Inventory Management",
+    badge: "Reagents & Stock",
   },
   lab_quality_analytics: {
     title: "Quality Control & Analytics",
-    subtitle: "Levey-Jennings visual charts, Westgard multi-rules, operational analytics, and TAT SLA monitoring",
-    badge: "Quality & SLAs",
+    subtitle: "Levey-Jennings visual QC charts, Westgard multi-rules, operational analytics, and TAT SLA monitoring",
+    badge: "QC & Analytics",
   },
   lab_admin_config: {
-    title: "Laboratory Test Master Directory",
-    subtitle: "Master directory of 206 hospital diagnostic tests, tariffs, NABL/CAP accreditation, and tube rules",
-    badge: "Catalogue & Policies",
+    title: "Laboratory Admin Configuration",
+    subtitle: "Master test catalogue, tariffs, biological reference intervals, and laboratory governance",
+    badge: "Test Master & Setup",
   },
 }
 
@@ -212,16 +212,16 @@ export default function LaboratoryManagementSuite({
   const tabs = [
     {
       id: "lab_dashboard" as LisSubModule,
-      label: "Dashboard",
+      label: "Lab Dashboard",
       icon: LayoutDashboard,
       badge: null,
       desc: "Live clinic pulse & workload",
     },
     {
       id: "lab_orders_collection" as LisSubModule,
-      label: "Orders & Phlebotomy",
+      label: "Lab Orders & Collection",
       icon: ClipboardList,
-      badge: counts.pendingDraws > 0 ? `${counts.pendingDraws} draws` : null,
+      badge: counts.pendingDraws > 0 ? `${counts.pendingDraws} pending` : null,
       badgeColor: "bg-amber-100 text-amber-800",
       desc: "Intake & specimen collection",
     },
@@ -229,35 +229,35 @@ export default function LaboratoryManagementSuite({
       id: "lab_workbench" as LisSubModule,
       label: "Lab Workbench",
       icon: Microscope,
-      badge: counts.workbenchPending > 0 ? `${counts.workbenchPending} pending` : null,
+      badge: counts.workbenchPending > 0 ? `${counts.workbenchPending} in bench` : null,
       badgeColor: "bg-teal-100 text-teal-800",
       desc: "Benches, entry & approval",
     },
     {
       id: "lab_reports" as LisSubModule,
-      label: "Diagnostic Reports",
+      label: "Lab Reports",
       icon: FileCheck2,
-      badge: counts.reportsReady > 0 ? `${counts.reportsReady} ready` : null,
+      badge: counts.reportsReady > 0 ? `${counts.reportsReady} approved` : null,
       badgeColor: "bg-emerald-100 text-emerald-800",
       desc: "Official printable reports",
     },
     {
       id: "lab_inventory" as LisSubModule,
-      label: "Reagents & Stock",
+      label: "Lab Inventory & Consumables",
       icon: Boxes,
       badge: null,
       desc: "Kits & vacuum tubes",
     },
     {
       id: "lab_quality_analytics" as LisSubModule,
-      label: "Quality & QC",
+      label: "Quality & Analytics",
       icon: LineChart,
       badge: null,
       desc: "Westgard rules & TAT SLAs",
     },
     {
       id: "lab_admin_config" as LisSubModule,
-      label: "Test Master",
+      label: "Admin Configuration",
       icon: Settings,
       badge: "206 tests",
       badgeColor: "bg-purple-100 text-[#7552B8]",
@@ -265,44 +265,7 @@ export default function LaboratoryManagementSuite({
     },
   ]
 
-  // Workflow pipeline stages
-  const workflowPipeline = [
-    {
-      step: 1,
-      title: "1. Doctor Prescription",
-      desc: "Doctor orders tests in portal",
-      tag: "Doctor Desk",
-      targetTab: "lab_orders_collection" as LisSubModule,
-    },
-    {
-      step: 2,
-      title: "2. Billing Clearance",
-      desc: "Cashier settles diagnostic bill",
-      tag: "Billing Counter",
-      targetTab: "lab_orders_collection" as LisSubModule,
-    },
-    {
-      step: 3,
-      title: "3. Specimen Draw",
-      desc: "Phlebotomist collects in tube (EDTA/Gel)",
-      tag: `${counts.pendingDraws} awaiting draw`,
-      targetTab: "lab_orders_collection" as LisSubModule,
-    },
-    {
-      step: 4,
-      title: "4. Workbench Analysis",
-      desc: "Analyzer processing & value entry",
-      tag: `${counts.workbenchPending} in bench`,
-      targetTab: "lab_workbench" as LisSubModule,
-    },
-    {
-      step: 5,
-      title: "5. Pathologist Sign & Print",
-      desc: "Official verification & PDF report",
-      tag: `${counts.reportsReady} reports released`,
-      targetTab: "lab_reports" as LisSubModule,
-    },
-  ]
+
 
   return (
     <div className="min-h-screen bg-[#F4F6FA] text-slate-800 p-6 space-y-4">
@@ -357,50 +320,7 @@ export default function LaboratoryManagementSuite({
           </div>
         </div>
 
-        {/* ── 2. INTERACTIVE DIAGNOSTIC WORKFLOW STEPPER ─────────────────────── */}
-        <div className="pt-2 border-t border-slate-100">
-          <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <span>Diagnostic Journey Pipeline (Click any stage to jump)</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2">
-            {workflowPipeline.map((p, idx) => {
-              const isCurrent =
-                (p.step === 1 && currentTab === "lab_orders_collection") ||
-                (p.step === 2 && currentTab === "lab_orders_collection") ||
-                (p.step === 3 && currentTab === "lab_orders_collection") ||
-                (p.step === 4 && currentTab === "lab_workbench") ||
-                (p.step === 5 && currentTab === "lab_reports")
 
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => handleTabChange(p.targetTab)}
-                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer group flex flex-col justify-between ${
-                    isCurrent
-                      ? "bg-purple-50/80 border-[#7552B8] shadow-2xs ring-1 ring-[#7552B8]"
-                      : "bg-slate-50/60 border-slate-200 hover:border-purple-300 hover:bg-white"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[11.5px] font-black ${isCurrent ? "text-[#7552B8]" : "text-slate-800"}`}>
-                      {p.title}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-400 font-bold">0{p.step}</span>
-                  </div>
-                  <div className="text-[10.5px] text-slate-500 mt-1 line-clamp-1">{p.desc}</div>
-                  <div className="mt-2 pt-1 border-t border-slate-200/60 flex items-center justify-between text-[10px]">
-                    <span className={`font-semibold ${isCurrent ? "text-[#7552B8]" : "text-slate-600"}`}>
-                      {p.tag}
-                    </span>
-                    <ArrowRight className="w-3 h-3 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-        </div>
 
         {/* ── 3. COLLAPSIBLE "HOW LAB WORKS" QUICK GUIDE BANNER ──────────────── */}
         {showGuide && (
