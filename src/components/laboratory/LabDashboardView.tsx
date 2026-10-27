@@ -579,7 +579,15 @@ export default function LabDashboardView({ onNavigate, onOpenOrder }: LabDashboa
                       {/* Actions */}
                       <td className="py-3 px-4 text-right">
                         <div className="flex items-center justify-end gap-1.5">
-                          {order.status === "Completed" ? (
+                          {!isPaid ? (
+                            <span
+                              className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg text-[10.5px] font-bold"
+                              title="Patient bill must be settled at Billing counter"
+                            >
+                              <Clock size={11} className="text-amber-600" />
+                              <span>Awaiting Billing</span>
+                            </span>
+                          ) : order.status === "Completed" ? (
                             <button
                               type="button"
                               onClick={() => onNavigate("lab_reports")}

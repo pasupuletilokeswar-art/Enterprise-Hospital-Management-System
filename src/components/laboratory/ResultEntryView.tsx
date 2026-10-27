@@ -142,6 +142,10 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
   }
 
   const handleAutoFillNormalValues = () => {
+    if (!isOrderPaid) {
+      showToast("Editing restricted: Patient bill must be paid at billing desk first.")
+      return
+    }
     if (!testDefinition) return
     const normalValues: Record<string, LabParameterResult> = {}
     testDefinition.parameters.forEach((param) => {
@@ -300,49 +304,30 @@ export default function ResultEntryView({ initialOrder, initialTest, onComplete 
 
           {/* Billing Clearance Status Banner */}
           {!isOrderPaid ? (
-            <div className="p-3.5 bg-amber-50 border-2 border-amber-300 rounded-xl flex flex-wrap items-center justify-between gap-3 text-amber-950">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-amber-200/90 rounded-lg text-amber-900">
-                  <AlertTriangle className="w-5 h-5 text-amber-700" />
-                </div>
-                <div>
-                  <div className="font-bold text-xs uppercase tracking-wider text-amber-900">
-                    Payment Pending Clearance (₹{selectedOrder.billing?.total?.toLocaleString("en-IN") || 0} Unpaid)
-                  </div>
-                  <div className="text-[11.5px] text-amber-800 mt-0.5">
-                    Pre-paid billing policy: Settle at the billing desk, or click below to quick-authorize and enter results.
-                  </div>
-                </div>
+            <div className="p-4 bg-amber-50 border-2 border-amber-300 rounded-xl flex items-center gap-3 text-amber-950 shadow-2xs">
+              <div className="p-2.5 bg-amber-200/90 rounded-xl text-amber-900 shrink-0">
+                <AlertTriangle className="w-5 h-5 text-amber-700" />
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    LabOrderDatabase.markBilled(selectedOrder.id, {
-                      mode: "Cash",
-                      collectedBy: "Duty Phlebotomist",
-                    })
-                    loadOrders()
-                    showToast(`Bill of ₹${selectedOrder.billing?.total || 0} settled! Result entry unlocked.`)
-                  }}
-                  className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold transition shadow-xs flex items-center gap-1.5 cursor-pointer"
-                >
-                  <DollarSign className="w-3.5 h-3.5" />
-                  <span>⚡ Quick Authorize & Settle Bill</span>
-                </button>
+              <div>
+                <div className="font-bold text-xs uppercase tracking-wider text-amber-900">
+                  Bill Payment Pending at Billing Counter (₹{selectedOrder.billing?.total?.toLocaleString("en-IN") || 0} Unpaid)
+                </div>
+                <div className="text-[11.5px] text-amber-800 mt-0.5">
+                  Hospital Policy Gate: Patient bill must be settled in the Billing section before report observations and values can be entered.
+                </div>
               </div>
             </div>
           ) : (
             <div className="px-3.5 py-2 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between gap-2 text-emerald-900 text-xs">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span className="font-bold">Bill Paid & Cleared</span>
+                <span className="font-bold">Bill Paid &amp; Cleared in Billing Section</span>
                 <span className="text-[11px] text-emerald-700 font-mono">
                   (Total: ₹{selectedOrder.billing.total.toLocaleString("en-IN")} · Receipt: {selectedOrder.billing.receiptNo || "Paid"})
                 </span>
               </div>
               <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] uppercase rounded">
-                Cleared for Results
+                Cleared for Results Entry
               </span>
             </div>
           )}
