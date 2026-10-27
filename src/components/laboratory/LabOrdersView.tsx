@@ -15,6 +15,8 @@ import {
   Building2,
   DollarSign,
   Tag,
+  Microscope,
+  Syringe,
 } from "lucide-react"
 import { LabOrder, LabOrderDatabase, priceForTest } from "../../services/labOrdersDb"
 import { ALL_LAB_TESTS, LabTestDefinition, findTestDefinition } from "./labCatalogueSchema"
